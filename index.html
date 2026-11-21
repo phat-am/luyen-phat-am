@@ -971,6 +971,208 @@ try{
 }catch(e){}
 function noteFrame(){const n=document.getElementById('frameNote');n.hidden=false;
   n.innerHTML='Nếu bấm Nói mà máy không nghe được: mở trang này bằng <b>Chrome</b> trên điện thoại (bấm nút chia sẻ hoặc ⋮ rồi chọn Mở trong trình duyệt).'}
+/* ================= HỘI THOẠI TÌNH HUỐNG =================
+   App đóng vai người đối diện, chị trả lời bằng giọng nói theo gợi ý.
+   Không dùng AI hay máy chủ riêng: kịch bản soạn sẵn, chấm bằng bộ nhận giọng của Chrome. */
+const TALKS=[
+{id:'a1-colleague',lv:0,t:'Chào đồng nghiệp mới',who:'Tom, đồng nghiệp mới',ctx:'Một đồng nghiệp mới đến nhà máy. Chị chào, giới thiệu và chỉ đường cho anh ấy.',
+ turns:[
+  ["Hi, I'm Tom. I'm new here.","Chào chị, tôi là Tom. Tôi mới đến.",[["Hello Tom, nice to meet you.","Chào Tom, rất vui được gặp anh."],["Welcome to the team, Tom.","Chào mừng anh vào nhóm, Tom."]]],
+  ["Thank you. What do you do here?","Cảm ơn chị. Chị làm gì ở đây?",[["I'm the production manager.","Tôi là quản lý sản xuất."],["I work in production.","Tôi làm ở bộ phận sản xuất."]]],
+  ["Great. How long have you worked here?","Tuyệt. Chị làm ở đây bao lâu rồi?",[["I've worked here for five years.","Tôi làm ở đây năm năm rồi."],["About five years.","Khoảng năm năm."]]],
+  ["Where is the canteen?","Căng tin ở đâu vậy?",[["It's next to the warehouse.","Nó ở cạnh nhà kho."],["Come with me, I'll show you.","Đi với tôi, tôi chỉ cho."]]]],
+ end:["Thanks a lot. See you later!","Cảm ơn chị nhiều. Hẹn gặp lại!"]},
+{id:'a1-canteen',lv:0,t:'Gọi món ở căng tin',who:'Nhân viên căng tin',ctx:'Giờ ăn trưa, chị gọi món và trả tiền.',
+ turns:[
+  ["Good afternoon. What would you like?","Chào chị. Chị muốn ăn gì?",[["I'd like some rice and chicken, please.","Cho tôi cơm gà."],["Can I have a noodle soup, please?","Cho tôi một bát mì nước."]]],
+  ["Anything to drink?","Chị uống gì không?",[["A glass of water, please.","Cho tôi một cốc nước."],["An iced tea, please.","Cho tôi một cốc trà đá."]]],
+  ["Here you are. That's thirty thousand dong.","Của chị đây. Hết ba mươi nghìn.",[["Here you are.","Tiền đây."],["Can I pay by card?","Tôi trả bằng thẻ được không?"]]],
+  ["Thank you. Enjoy your meal!","Cảm ơn chị. Chúc chị ngon miệng!",[["Thank you very much.","Cảm ơn nhiều."],["Thanks, have a nice day.","Cảm ơn, chúc một ngày tốt lành."]]]],
+ end:["You too. Goodbye!","Chị cũng vậy nhé. Tạm biệt!"]},
+{id:'a1-time',lv:0,t:'Hỏi giờ và ca làm',who:'Công nhân mới',ctx:'Một công nhân mới hỏi chị về giờ giấc và lịch làm việc.',
+ turns:[
+  ["Excuse me, what time is it?","Xin lỗi, mấy giờ rồi ạ?",[["It's eight o'clock.","Tám giờ rồi."],["It's nearly nine.","Gần chín giờ rồi."]]],
+  ["What time does the morning shift start?","Ca sáng bắt đầu lúc mấy giờ ạ?",[["It starts at six o'clock.","Bắt đầu lúc sáu giờ."],["The morning shift starts at six.","Ca sáng bắt đầu lúc sáu giờ."]]],
+  ["And when does it finish?","Thế mấy giờ thì xong ạ?",[["It finishes at two in the afternoon.","Hai giờ chiều thì xong."],["At two o'clock.","Lúc hai giờ."]]],
+  ["Do you work on Saturday?","Thứ Bảy có phải làm không ạ?",[["Yes, we work on Saturday morning.","Có, sáng thứ Bảy vẫn làm."],["No, we don't work at the weekend.","Không, cuối tuần được nghỉ."]]]],
+ end:["OK, thank you. See you tomorrow.","Vâng, cảm ơn chị. Mai gặp lại ạ."]},
+{id:'a1-way',lv:0,t:'Chỉ đường cho khách',who:'Khách đến thăm nhà máy',ctx:'Một vị khách hỏi đường trong nhà máy.',
+ turns:[
+  ["Excuse me, where is the meeting room?","Xin lỗi, phòng họp ở đâu ạ?",[["It's on the second floor.","Ở tầng hai."],["Go straight and turn left.","Đi thẳng rồi rẽ trái."]]],
+  ["Is it near the office?","Có gần văn phòng không?",[["Yes, it's next to the office.","Có, nó ở cạnh văn phòng."],["No, it's opposite the warehouse.","Không, nó ở đối diện nhà kho."]]],
+  ["Where can I find the toilet?","Nhà vệ sinh ở đâu ạ?",[["It's at the end of the corridor.","Ở cuối hành lang."],["It's on your right.","Ở bên phải anh."]]],
+  ["Thank you. Can I park my motorbike here?","Cảm ơn. Tôi đỗ xe máy ở đây được không?",[["Sorry, please park over there.","Xin lỗi, anh đỗ đằng kia nhé."],["Yes, you can park here.","Được, anh đỗ ở đây được."]]]],
+ end:["Great, thanks for your help.","Tốt quá, cảm ơn chị đã giúp."]},
+{id:'a2-supplier',lv:1,t:'Gọi nhà cung cấp hỏi giao hàng',who:'Nhân viên bán hàng của nhà cung cấp',ctx:'Chị gọi điện cho nhà cung cấp hạt nhựa để hỏi đơn hàng.',
+ turns:[
+  ["Good morning, Green Resin Company. How can I help you?","Chào chị, công ty Green Resin xin nghe. Tôi giúp gì được ạ?",[["Good morning. I'm calling about our order.","Chào anh. Tôi gọi về đơn hàng của chúng tôi."],["Hello, I'd like to check our delivery, please.","Chào anh, tôi muốn kiểm tra lịch giao hàng."]]],
+  ["Sure. Which order is it?","Vâng. Đơn hàng nào ạ?",[["It's the order from last Monday.","Đơn đặt hôm thứ Hai tuần trước."],["We ordered twenty bags of resin.","Chúng tôi đặt hai mươi bao hạt nhựa."]]],
+  ["Let me check. It will arrive on Thursday.","Để tôi kiểm tra. Thứ Năm hàng sẽ đến.",[["That's too late. We need it on Wednesday.","Muộn quá. Chúng tôi cần hàng vào thứ Tư."],["OK, Thursday is fine.","Được, thứ Năm cũng được."]]],
+  ["I'll ask the warehouse. Can I call you back this afternoon?","Tôi sẽ hỏi kho. Chiều nay tôi gọi lại chị được không?",[["Yes, please call me back before four.","Được, anh gọi lại trước bốn giờ nhé."],["Sure, I'll wait for your call.","Được, tôi chờ điện của anh."]]],
+  ["No problem. Is there anything else?","Không có gì. Chị cần gì thêm không?",[["No, that's all. Thank you.","Không, vậy thôi. Cảm ơn anh."],["Please send me the delivery note by email.","Anh gửi phiếu giao hàng qua email cho tôi nhé."]]]],
+ end:["Of course. Have a nice day!","Vâng ạ. Chúc chị một ngày tốt lành!"]},
+{id:'a2-shift',lv:1,t:'Báo cáo ca làm với sếp',who:'Giám đốc',ctx:'Đầu giờ sáng, giám đốc hỏi chị về ca đêm qua.',
+ turns:[
+  ["Hi. How was the night shift?","Chào chị. Ca đêm qua thế nào?",[["It went well. We met the target.","Ổn ạ. Chúng tôi đạt chỉ tiêu."],["Not bad, but we had a small problem.","Cũng được, nhưng có một sự cố nhỏ."]]],
+  ["What was the output like?","Sản lượng thế nào?",[["The output was higher than yesterday.","Sản lượng cao hơn hôm qua."],["It was a little lower than the plan.","Thấp hơn kế hoạch một chút."]]],
+  ["Were there any machine problems?","Có máy nào gặp sự cố không?",[["Line three stopped for twenty minutes.","Dây chuyền ba dừng hai mươi phút."],["No, all the machines ran smoothly.","Không, các máy đều chạy ổn."]]],
+  ["Why did it stop?","Sao lại dừng?",[["The cutter was blocked, so we cleaned it.","Dao cắt bị kẹt nên chúng tôi đã vệ sinh."],["There was a power cut.","Bị mất điện."]]],
+  ["OK. Please write it in the shift report.","Được. Chị ghi vào báo cáo ca nhé.",[["Sure, I'll send it before nine.","Vâng, tôi gửi trước chín giờ."],["I've already written it.","Tôi viết xong rồi ạ."]]]],
+ end:["Thanks. Good job.","Cảm ơn chị. Làm tốt lắm."]},
+{id:'a2-meeting',lv:1,t:'Hẹn lịch họp',who:'Đồng nghiệp phòng kế hoạch',ctx:'Đồng nghiệp muốn hẹn chị họp trong tuần.',
+ turns:[
+  ["Are you free for a meeting this week?","Tuần này chị có rảnh họp không?",[["Yes, I'm free on Wednesday afternoon.","Có, chiều thứ Tư tôi rảnh."],["I'm busy today, but tomorrow is fine.","Hôm nay tôi bận, mai thì được."]]],
+  ["How about two o'clock on Wednesday?","Hai giờ chiều thứ Tư được không?",[["Two o'clock is perfect.","Hai giờ là đẹp."],["Could we make it three o'clock instead?","Mình đổi sang ba giờ được không?"]]],
+  ["Sure. What would you like to discuss?","Được. Chị muốn bàn về việc gì?",[["I'd like to talk about the production plan.","Tôi muốn bàn về kế hoạch sản xuất."],["We need to discuss the new safety rules.","Mình cần bàn về quy định an toàn mới."]]],
+  ["Should I invite the quality team?","Có mời phòng chất lượng không?",[["Yes, please invite them.","Có, anh mời họ nhé."],["No, it's just the two of us.","Không, chỉ hai chúng ta thôi."]]],
+  ["OK, I'll send an invitation.","Được, tôi sẽ gửi lời mời.",[["Great, thank you.","Tốt quá, cảm ơn anh."],["Please book the meeting room too.","Anh đặt luôn phòng họp nhé."]]]],
+ end:["Done. See you on Wednesday.","Xong rồi. Hẹn chị thứ Tư."]},
+{id:'a2-delay',lv:1,t:'Xin lỗi khách vì giao hàng chậm',who:'Khách hàng',ctx:'Khách gọi đến phàn nàn vì chưa nhận được hàng.',
+ turns:[
+  ["Hello, our order hasn't arrived yet. What happened?","Chào chị, đơn hàng của chúng tôi vẫn chưa đến. Có chuyện gì vậy?",[["I'm sorry for the delay.","Tôi xin lỗi vì giao hàng chậm."],["I apologise. Let me check for you.","Tôi xin lỗi. Để tôi kiểm tra cho anh."]]],
+  ["We need it urgently for our production.","Chúng tôi cần gấp để sản xuất.",[["I understand. We'll deliver it tomorrow morning.","Tôi hiểu. Sáng mai chúng tôi sẽ giao."],["We'll send part of the order today.","Hôm nay chúng tôi sẽ giao trước một phần."]]],
+  ["Why was it late?","Sao lại chậm vậy?",[["One of our machines broke down.","Một máy của chúng tôi bị hỏng."],["We had a problem with the raw material.","Chúng tôi gặp vấn đề với nguyên liệu."]]],
+  ["Will this happen again?","Chuyện này có lặp lại không?",[["No, we've fixed the problem.","Không, chúng tôi đã khắc phục rồi."],["We'll keep more stock to avoid it.","Chúng tôi sẽ dự trữ thêm hàng để tránh."]]]],
+ end:["OK, thank you for explaining.","Được, cảm ơn chị đã giải thích."]},
+{id:'b1-complaint',lv:2,t:'Xử lý khiếu nại chất lượng',who:'Khách hàng',ctx:'Khách báo lô hạt nhựa vừa rồi có chấm đen. Chị tiếp nhận và đưa hướng xử lý.',
+ turns:[
+  ["We found black spots in the last batch of pellets.","Chúng tôi thấy chấm đen trong lô hạt nhựa vừa rồi.",[["I'm sorry to hear that. Could you send us some photos?","Rất tiếc về việc này. Anh gửi cho chúng tôi vài tấm ảnh được không?"],["Thank you for telling us. Which batch was it?","Cảm ơn anh đã báo. Là lô nào ạ?"]]],
+  ["I'll email the photos. What could cause this?","Tôi sẽ gửi ảnh qua email. Nguyên nhân có thể là gì?",[["It might be contamination in the raw material.","Có thể do nguyên liệu bị lẫn tạp chất."],["The screen may have been damaged.","Có thể lưới lọc bị hỏng."]]],
+  ["What will you do about it?","Bên chị sẽ xử lý thế nào?",[["We'll test the samples and reply within two days.","Chúng tôi sẽ kiểm tra mẫu và trả lời trong hai ngày."],["We'll replace the bags that have the problem.","Chúng tôi sẽ đổi các bao bị lỗi."]]],
+  ["How will you prevent it in the future?","Sau này bên chị phòng tránh thế nào?",[["We'll check the screen more often.","Chúng tôi sẽ kiểm tra lưới lọc thường xuyên hơn."],["We'll add an extra quality check before packing.","Chúng tôi sẽ thêm một bước kiểm tra trước khi đóng bao."]]],
+  ["That sounds good. Please keep me updated.","Nghe được đấy. Chị cập nhật cho tôi nhé.",[["Of course. I'll call you on Friday.","Tất nhiên. Thứ Sáu tôi sẽ gọi anh."],["Sure, I'll send you a report.","Vâng, tôi sẽ gửi anh báo cáo."]]]],
+ end:["Thank you. I appreciate your quick response.","Cảm ơn chị. Tôi đánh giá cao việc chị phản hồi nhanh."]},
+{id:'b1-idea',lv:2,t:'Đề xuất cải tiến với giám đốc',who:'Giám đốc',ctx:'Chị trình bày một ý tưởng tiết kiệm chi phí với giám đốc.',
+ turns:[
+  ["You wanted to talk to me about an idea?","Chị muốn nói với tôi về một ý tưởng à?",[["Yes, I'd like to suggest a way to save energy.","Vâng, tôi muốn đề xuất một cách tiết kiệm điện."],["Yes, I have an idea to reduce waste.","Vâng, tôi có ý tưởng giảm hao hụt."]]],
+  ["Go on. What's the idea?","Chị nói đi. Ý tưởng thế nào?",[["We could run the big machines at night when electricity is cheaper.","Mình có thể chạy các máy lớn vào ban đêm khi giá điện rẻ hơn."],["We could reuse more of the scrap material.","Mình có thể tái sử dụng thêm phế liệu."]]],
+  ["How much could we save?","Mình tiết kiệm được bao nhiêu?",[["I think we could save about ten percent.","Tôi nghĩ tiết kiệm được khoảng mười phần trăm."],["I'm not sure yet, but I can calculate it.","Tôi chưa chắc, nhưng tôi có thể tính."]]],
+  ["Are there any risks?","Có rủi ro gì không?",[["The night shift would need more staff.","Ca đêm sẽ cần thêm người."],["We'd need to train the operators first.","Mình cần đào tạo công nhân vận hành trước."]]],
+  ["Interesting. What do you need from me?","Hay đấy. Chị cần tôi hỗ trợ gì?",[["I need your approval to run a one-month trial.","Tôi cần anh duyệt để chạy thử một tháng."],["Could we discuss it at the next meeting?","Mình bàn việc này ở cuộc họp tới được không?"]]]],
+ end:["Let's try it. Send me a plan by next week.","Thử xem. Tuần sau chị gửi tôi kế hoạch nhé."]},
+{id:'b1-interview',lv:2,t:'Phỏng vấn xin việc',who:'Người phỏng vấn',ctx:'Chị đi phỏng vấn cho một vị trí quản lý mới.',
+ turns:[
+  ["Could you tell me about yourself?","Chị giới thiệu về bản thân được không?",[["I'm an engineer with many years of experience in manufacturing.","Tôi là kỹ sư, có nhiều năm kinh nghiệm trong sản xuất."],["I've worked in production management for over ten years.","Tôi làm quản lý sản xuất hơn mười năm."]]],
+  ["What are your main strengths?","Điểm mạnh chính của chị là gì?",[["I'm good at solving problems and leading teams.","Tôi giỏi giải quyết vấn đề và dẫn dắt đội nhóm."],["I'm organised and I work well under pressure.","Tôi làm việc có tổ chức và chịu được áp lực."]]],
+  ["Can you describe a difficult situation at work?","Chị kể về một tình huống khó trong công việc được không?",[["Once a machine broke down during a big order, so we changed the shifts.","Có lần máy hỏng giữa đơn hàng lớn, nên chúng tôi đổi lại ca."],["We had a quality problem, and I led the team to find the cause.","Chúng tôi gặp lỗi chất lượng, tôi dẫn đội đi tìm nguyên nhân."]]],
+  ["Why do you want this job?","Sao chị muốn công việc này?",[["I want to develop my skills in a bigger company.","Tôi muốn phát triển kỹ năng ở công ty lớn hơn."],["I'm looking for a new challenge.","Tôi đang tìm thử thách mới."]]],
+  ["Do you have any questions for us?","Chị có câu hỏi nào cho chúng tôi không?",[["What does a typical day look like in this role?","Một ngày làm việc ở vị trí này thường thế nào?"],["When can I expect to hear from you?","Khi nào tôi nhận được phản hồi?"]]]],
+ end:["Thank you. We'll be in touch soon.","Cảm ơn chị. Chúng tôi sẽ sớm liên hệ."]},
+{id:'b1-price',lv:2,t:'Thương lượng giá với đối tác',who:'Đối tác nước ngoài',ctx:'Đối tác cho rằng giá hơi cao. Chị bảo vệ giá và đưa ra điều kiện.',
+ turns:[
+  ["Thanks for meeting us. Shall we start?","Cảm ơn chị đã gặp chúng tôi. Mình bắt đầu nhé?",[["Yes, let's begin with the new price.","Vâng, mình bắt đầu với giá mới."],["Of course. Thank you for coming.","Vâng. Cảm ơn anh đã đến."]]],
+  ["Our customers say your price is a bit high.","Khách của chúng tôi nói giá bên chị hơi cao.",[["Our quality is more stable than other suppliers.","Chất lượng của chúng tôi ổn định hơn các nhà cung cấp khác."],["We can offer a discount for larger orders.","Chúng tôi có thể giảm giá cho đơn lớn hơn."]]],
+  ["What discount can you offer?","Bên chị giảm được bao nhiêu?",[["We can give you three percent for orders over ten containers.","Chúng tôi giảm ba phần trăm cho đơn trên mười container."],["That depends on the quantity.","Còn tuỳ vào số lượng."]]],
+  ["And the delivery time?","Còn thời gian giao hàng?",[["We can deliver within two weeks.","Chúng tôi giao được trong hai tuần."],["Usually about ten days after we receive the order.","Thường khoảng mười ngày sau khi nhận đơn."]]],
+  ["OK. Let me discuss it with my manager.","Được. Để tôi bàn với sếp.",[["Sure. I'll send you a written offer today.","Vâng. Hôm nay tôi sẽ gửi anh báo giá bằng văn bản."],["No problem. We look forward to working with you.","Không sao. Chúng tôi mong được hợp tác với anh."]]]],
+ end:["Great. We'll reply by Friday.","Tốt. Chúng tôi sẽ trả lời trước thứ Sáu."]}
+];
+const TLV=['A1','A2','B1'];
+let TK=null; // {d: chỉ số kịch bản, i: lượt hiện tại, log: [], sc: [], hide: bool, done: bool}
+
+(function(){const st=document.createElement('style');st.textContent=`
+.big.alt{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
+.chat{display:grid;gap:10px;margin:14px 0}
+.bub{max-width:88%;padding:10px 14px;border-radius:18px;font-size:16px;line-height:1.4}
+.bub small{display:block;color:var(--mute);font-size:13px;margin-top:4px}
+.bub.ai{background:var(--card);border:1.5px solid var(--line);border-bottom-left-radius:6px;justify-self:start}
+.bub.me{background:var(--soft);border-bottom-right-radius:6px;justify-self:end;text-align:right}
+.bub .row{margin-top:6px}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:8px;font-size:16px}
+.opt small{display:block;color:var(--mute);font-size:13px;margin-top:3px}
+.opt.best{border-color:var(--acc)}
+.tkhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.dots{display:flex;gap:5px}.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}.dots i.y{background:var(--acc)}
+`;document.head.appendChild(st)})();
+
+// Thêm khung và nút vào trang mà không đụng tới phần cũ
+(function(){
+  const app=document.querySelector('#v-test');if(app&&!document.getElementById('v-talk')){const s=document.createElement('section');s.className='view';s.id='v-talk';app.after(s)}
+  const ses=document.querySelector('#v-home [data-a="session"]');
+  if(ses&&!document.getElementById('tkHome')){const b=document.createElement('button');b.className='big alt';b.id='tkHome';b.dataset.a='tkOpen';b.innerHTML='💬 Hội thoại hôm nay';ses.after(b)}
+  const _show=show;show=function(v){_show(v);if(v==='talk')renderTalk()};
+})();
+
+function talkToday(){const n=Math.max(0,S.lvN===undefined?0:Math.min(2,S.lvN));const ok=TALKS.map((x,i)=>x.lv<=n?i:-1).filter(i=>i>=0);
+  const st=S.talk||{};const fresh=ok.filter(i=>!(st[TALKS[i].id]));const pool=fresh.length?fresh:ok;return pool[today()%pool.length]}
+function tkStart(d){const lvN=S.lvN===undefined?0:S.lvN;TK={d,i:0,log:[],sc:[],hide:lvN>=3,done:false};const D=TALKS[d];TK.log.push({ai:D.turns[0][0],vn:D.turns[0][1]});renderTalk();setTimeout(()=>speak(D.turns[0][0]),300)}
+function renderTalk(){
+  const el=document.getElementById('v-talk');if(!el)return;
+  if(!TK){
+    const st=S.talk||{},td=talkToday();
+    const card=i=>{const x=TALKS[i];return `<button class="les" data-a="tkGo" data-d="${i}"><b>${esc(x.t)}</b><span class="pct">${TLV[x.lv]}${st[x.id]?' · ✓'+st[x.id].n:''}</span><span class="muted">${esc(x.ctx)}</span></button>`};
+    el.innerHTML=`<h1>Hội thoại tình huống</h1><p class="muted">App đóng vai người đối diện và đọc câu. Chị trả lời bằng giọng nói theo một trong các gợi ý, nói đạt thì cuộc hội thoại đi tiếp. Mỗi ngày app chọn sẵn một tình huống hợp trình độ.</p>
+    <h2>Hôm nay</h2><div class="list">${card(td)}</div>
+    ${[0,1,2].map(l=>`<h2>Mức ${TLV[l]}</h2><div class="list">${TALKS.map((x,i)=>x.lv===l?card(i):'').join('')}</div>`).join('')}`;
+    return;
+  }
+  const D=TALKS[TK.d],n=D.turns.length;
+  let h=`<div class="tkhead"><button class="ghost" data-a="tkBack">‹ Danh sách</button><div class="dots">${D.turns.map((_,i)=>`<i class="${i<TK.i||TK.done?'y':''}"></i>`).join('')}</div></div>
+  <h1 style="margin-top:12px">${esc(D.t)}</h1><p class="muted">Chị nói chuyện với: <b>${esc(D.who)}</b>. ${esc(D.ctx)}</p><div class="chat">`;
+  TK.log.forEach((m,j)=>{
+    if(m.ai)h+=`<div class="bub ai">${esc(m.ai)}<small>${esc(m.vn)}</small><div class="row"><button class="ib" data-a="tkSay" data-j="${j}">${IC.play}Nghe</button><button class="ib" data-a="tkSlow" data-j="${j}">${IC.slow}Chậm</button></div></div>`;
+    else h+=`<div class="bub me">${esc(m.me)}<small>Mức đúng ${Math.round(m.s*100)}%</small></div>`;
+  });
+  h+='</div>';
+  if(TK.done){
+    const avg=TK.sc.length?Math.round(TK.sc.reduce((a,b)=>a+b,0)/TK.sc.length*100):0;
+    h+=`<div class="box"><span class="muted">Hoàn thành hội thoại</span><b>${avg}% trung bình</b><span class="muted">${TK.sc.length} lượt nói. ${avg>=Math.round(T()*100)?'Rất tốt, chị nói trôi chảy!':'Làm lại thêm một lần để nói trơn hơn nhé.'}</span></div>
+    <button class="big" data-a="tkGo" data-d="${TK.d}">Làm lại hội thoại này</button><button class="big alt" data-a="tkBack">Chọn hội thoại khác</button>`;
+  }else{
+    const opts=D.turns[TK.i][2];
+    h+=`<div class="pc" data-k="tk"><div class="tkhead"><b>Lượt của chị</b><button class="chip ${TK.hide?'on':''}" data-a="tkHide">${TK.hide?'Hiện chữ tiếng Anh':'Ẩn chữ tiếng Anh'}</button></div>
+    <p class="muted" style="margin:6px 0 0">${TK.hide?'Khó hơn: chỉ xem nghĩa tiếng Việt, tự nói câu tiếng Anh.':'Chọn một câu để trả lời. Bấm vào câu để nghe mẫu.'}</p>
+    ${opts.map((o,k)=>`<button class="opt ${TK.best===k?'best':''}" data-a="tkOpt" data-k="${k}">${TK.hide?'💬 '+esc(o[1]):esc(o[0])+'<small>'+esc(o[1])+'</small>'}</button>`).join('')}
+    <div class="row" style="margin-top:12px"><button class="ib mic" data-a="tkMic">${IC.mic}Trả lời</button><button class="ib" data-a="tkSkip">Bỏ qua lượt này</button></div>
+    <div class="fb" hidden></div></div>`;
+  }
+  el.innerHTML=h;
+  const last=el.querySelector('.chat .bub:last-child');if(last&&TK.log.length>1)last.scrollIntoView({block:'center'});
+}
+function tkNext(){
+  const D=TALKS[TK.d];TK.i++;TK.best=undefined;
+  if(TK.i>=D.turns.length){TK.done=true;TK.log.push({ai:D.end[0],vn:D.end[1]});
+    S.talk=S.talk||{};const r=S.talk[D.id]=S.talk[D.id]||{n:0,b:0};r.n++;const avg=TK.sc.length?TK.sc.reduce((a,b)=>a+b,0)/TK.sc.length:0;if(avg>r.b)r.b=avg;save();
+    renderTalk();setTimeout(()=>speak(D.end[0]),300);return}
+  TK.log.push({ai:D.turns[TK.i][0],vn:D.turns[TK.i][1]});renderTalk();setTimeout(()=>speak(D.turns[TK.i][0]),300);
+}
+function tkMic(btn){
+  if(btn.classList.contains('on')){stopListen();return}
+  const card=btn.closest('.pc'),D=TALKS[TK.d],opts=D.turns[TK.i][2];
+  btn.classList.add('on');
+  showFb(card,'','Đang nghe… chị nói câu trả lời.<br><span class="muted">Nói xong máy tự chấm.</span>');
+  listen(t=>showFb(card,'','Đang nghe: <i>'+esc(t)+'</i>'),12000).then(({alts,err})=>{
+    btn.classList.remove('on');
+    if(err==='cancel')return;
+    if(err||!alts.length){showFb(card,'near',esc(ERR[err]||ERR['no-speech']));return}
+    micOK=true;
+    let best={s:-1,k:0,r:null};opts.forEach((o,k)=>{const r=scoreOf({w:o[0],kind:'s'},alts);if(r.s>best.s)best={s:r.s,k,r}});
+    bump();save();
+    const o=opts[best.k],pct=Math.round(best.s*100);
+    if(best.s>=T()){
+      TK.sc.push(best.s);TK.log.push({me:o[0],s:best.s});
+      showFb(card,'ok','<b>Mức đúng '+pct+'%.</b> Tốt lắm!');setTimeout(tkNext,700);
+    }else{
+      TK.best=best.k;
+      const ws=o[0].split(/\s+/);let h='<b>Mức đúng '+pct+'%.</b> '+(best.s>=0.55?'Gần được rồi, nói lại rõ hơn nhé.':'Máy chưa nghe ra. Bấm vào câu để nghe mẫu rồi nói lại.');
+      if(best.r&&best.r.mk)h+='<div class="mk">'+ws.map((w,i)=>'<span class="'+(best.r.mk[i]?'y':'n')+'">'+esc(w)+'</span>').join('')+'</div><div class="muted">Máy nghe được: <i>'+esc(best.r.heard)+'</i></div>';
+      showFb(card,best.s>=0.55?'near':'bad',h);
+      card.querySelectorAll('.opt').forEach((b,k)=>b.classList.toggle('best',k===best.k));
+    }
+  });
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const a=b.dataset.a;if(a.slice(0,2)!=='tk')return;
+  if(a==='tkOpen'){TK=null;tkStart(talkToday());show('talk')}
+  else if(a==='tkGo'){tkStart(+b.dataset.d);show('talk')}
+  else if(a==='tkBack'){stopListen();TK=null;renderTalk();window.scrollTo(0,0)}
+  else if(a==='tkSay')speak(TK.log[+b.dataset.j].ai);
+  else if(a==='tkSlow')speak(TK.log[+b.dataset.j].ai,S.set.slow);
+  else if(a==='tkOpt')speak(TALKS[TK.d].turns[TK.i][2][+b.dataset.k][0]);
+  else if(a==='tkHide'){TK.hide=!TK.hide;renderTalk()}
+  else if(a==='tkSkip'){stopListen();TK.log.push({me:'(bỏ qua)',s:0});tkNext()}
+  else if(a==='tkMic')tkMic(b);
+});
 }
 </script>
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})</script>
