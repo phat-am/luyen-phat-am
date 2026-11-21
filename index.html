@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Luyện phát âm</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ef5236">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
@@ -969,5 +973,6 @@ function noteFrame(){const n=document.getElementById('frameNote');n.hidden=false
   n.innerHTML='Nếu bấm Nói mà máy không nghe được: mở trang này bằng <b>Chrome</b> trên điện thoại (bấm nút chia sẻ hoặc ⋮ rồi chọn Mở trong trình duyệt).'}
 }
 </script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})</script>
 </body>
 </html>
