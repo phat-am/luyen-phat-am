@@ -53,6 +53,17 @@ h2{font-size:22px;line-height:1.2;margin:22px 0 10px;font-weight:700}
 .pw{font-size:28px;font-weight:800;line-height:1.15}
 .pc.sent .pw{font-size:21px;font-weight:700;line-height:1.35}
 .st{color:var(--acc);font-weight:700;letter-spacing:.02em}
+.wl{display:flex;gap:12px;align-items:center}.emo{font-size:40px;line-height:1;flex:none}
+.pc.mini{margin:14px 0 0;padding:12px;background:var(--bg);border-style:dashed}.pc.mini .pw{font-size:18px}.pc.mini .ib{min-height:42px;font-size:14px}
+.exlab{font-size:12px;font-weight:700;color:var(--acc);margin-bottom:4px}
+.tks{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:flex-start}.tk{display:inline-grid;justify-items:start}.tk b{font-weight:700}.tk i{font-style:normal;font-weight:400;font-size:14px;color:var(--plum);letter-spacing:.01em}
+.pc.mini .tk i{font-size:13px}
+.ipabig{font-size:42px;font-weight:700;text-align:center;color:var(--plum);margin:10px 0 4px}
+.symgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sym{display:grid;gap:2px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:12px}
+.sym b{font-size:28px;color:var(--plum)}.sym span{font-size:13px;color:var(--mute)}.sym em{font-style:normal;font-size:14px}
+.lvl{font-size:56px;font-weight:800;color:var(--acc);line-height:1}
+.bandrow{display:grid;grid-template-columns:44px 1fr 48px;gap:10px;align-items:center;margin:8px 0}.bandrow .bar{grid-column:auto}
 .pp{color:var(--mute);font-size:15px;margin-top:2px}
 .pill{flex:none;font-weight:800;font-size:14px;border-radius:999px;padding:4px 10px;background:var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
 .pill.ok{background:var(--ok);color:var(--card)}.pill.near{background:var(--near);color:#1b1424}.pill.bad{background:var(--bad);color:#fff}
@@ -96,8 +107,8 @@ textarea{min-height:90px}
 .diag{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:10px 12px;font-size:14px;margin:0 0 14px}
 .diag .y{color:var(--ok);font-weight:700}.diag .n{color:var(--bad);font-weight:700}
 .toast{position:fixed;left:12px;right:12px;bottom:88px;max-width:616px;margin:0 auto;background:var(--ink);color:var(--bg);border-radius:14px;padding:12px 14px;font-size:15px;z-index:9;display:none}
-.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:5}
-.tabs button{border:0;background:none;display:grid;justify-items:center;gap:2px;font-size:12px;font-weight:500;color:var(--mute);min-height:52px;border-radius:12px}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:5}
+.tabs button{border:0;background:none;display:grid;justify-items:center;gap:2px;font-size:11px;font-weight:500;color:var(--mute);min-height:52px;border-radius:12px}
 .tabs svg{width:22px;height:22px}
 .tabs button.on{color:var(--acc);font-weight:700}
 ol.road{padding-left:20px;margin:6px 0}ol.road li{margin:6px 0}
@@ -125,14 +136,17 @@ ol.road{padding-left:20px;margin:6px 0}ol.road li{margin:6px 0}
       </div>
     </div>
     <button class="big" data-a="session">Bắt đầu bài hôm nay</button>
-    <h2>Âm cần luyện nhất</h2>
+    <div class="box" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><span class="muted">Trình độ phát âm</span><b id="lvTxt" style="font-size:24px;display:block">chưa kiểm tra</b><span class="muted" id="lvDiff"></span></div><button class="ghost" data-a="testStart">Kiểm tra trình độ</button></div>
+    <h2>Lỗi hay gặp của chị</h2>
+    <div id="profHome"></div>
+    <h2>Bài nên luyện tiếp</h2>
     <div class="list" id="weakList"></div>
     <h2>Luyện thế nào cho hiệu quả</h2>
     <div class="how">
       <div><b>Nghe trước, nói sau:</b> bấm Nghe, rồi Nghe chậm để bắt từng âm.</div>
       <div><b>Bắt chước khẩu hình:</b> mở Cách đọc, soi gương xem lưỡi và môi đặt đúng chưa.</div>
       <div><b>Nói và được chấm:</b> bấm Nói, máy cho điểm phần trăm. Chưa đạt thì nói lại đến khi đạt.</div>
-      <div><b>Tự nghe lại mình:</b> bấm Ghi âm, nói, rồi bấm So sánh để nghe mẫu và giọng mình liền nhau.</div>
+      <div><b>Tự nghe lại mình:</b> bấm Ghi âm, nói, rồi bấm So sánh để nghe mẫu và giọng mình liền nhau. App còn phân tích trọng âm, ngữ điệu, độ trôi chảy và nhịp điệu của bản ghi.</div>
       <div><b>Đều đặn hơn nhiều:</b> 10 phút mỗi ngày tốt hơn 1 tiếng mỗi tuần.</div>
     </div>
   </section>
@@ -142,12 +156,15 @@ ol.road{padding-left:20px;margin:6px 0}ol.road li{margin:6px 0}
   <section class="view" id="v-sent"></section>
   <section class="view" id="v-prog"></section>
   <section class="view" id="v-session"></section>
+  <section class="view" id="v-ipa"></section>
+  <section class="view" id="v-test"></section>
 </div>
 
 <div class="toast" id="toast" role="status"></div>
 <nav class="tabs" aria-label="Chuyển mục">
   <button data-a="tab" data-v="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Hôm nay</button>
-  <button data-a="tab" data-v="sounds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>Âm khó</button>
+  <button data-a="tab" data-v="sounds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>Bài học</button>
+  <button data-a="tab" data-v="ipa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5v18h3M16 3h3v18h-3M10 15l2-7 2 7M10.6 13h2.8"/></svg>Phiên âm</button>
   <button data-a="tab" data-v="pairs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="3" y="14" width="5" height="7" rx="2"/><rect x="16" y="14" width="5" height="7" rx="2"/></svg>Cặp âm</button>
   <button data-a="tab" data-v="sent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg>Câu nói</button>
   <button data-a="tab" data-v="prog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Tiến độ</button>
@@ -156,93 +173,102 @@ ol.road{padding-left:20px;margin:6px 0}ol.road li{margin:6px 0}
 <script>
 {
 /* ================= DỮ LIỆU ================= */
-// Mỗi từ: [từ, IPA (Anh-Anh), nghĩa, (cách nhấn/nối âm)]
+// Mỗi từ: [từ, IPA (Anh-Anh), nghĩa, cách nhấn/nối âm, hình, câu ví dụ, dịch]
 const LESSONS=[
 {t:'Âm cuối /t/ và /d/',sub:'Lỗi số 1 của người Việt: nuốt âm cuối',how:[
 'Tiếng Việt chặn hơi ở âm cuối (“hát”, “mắt”). Tiếng Anh phải <b>thả</b> âm cuối ra.',
 '/t/ cuối: đầu lưỡi chạm lợi sau răng trên, rồi bật nhẹ một làn hơi nhỏ.',
 '/d/ cuối: cùng chỗ đặt lưỡi nhưng rung cổ họng. Nguyên âm phía trước đọc <b>dài</b> hơn một chút (need dài hơn neat).',
 'Tự kiểm tra: đặt tay trước miệng, với /t/ cuối phải thấy một làn hơi nhẹ.'],
-words:[['eat','iːt','ăn'],['need','niːd','cần'],['start','stɑːt','bắt đầu'],['load','ləʊd','chất hàng'],['output','ˈaʊtpʊt','sản lượng'],['paid','peɪd','đã trả'],['night','naɪt','ban đêm'],['good','ɡʊd','tốt']],
+words:[["eat", "iːt", "ăn", "", "🍽️", "Let's eat lunch at twelve.", "Mình ăn trưa lúc 12 giờ nhé."], ["need", "niːd", "cần", "", "🙋", "We need two more workers.", "Chúng ta cần thêm hai công nhân."], ["start", "stɑːt", "bắt đầu", "", "▶️", "The machine will start at seven.", "Máy sẽ chạy lúc 7 giờ."], ["load", "ləʊd", "chất hàng", "", "🚚", "Please load the truck now.", "Vui lòng chất hàng lên xe ngay."], ["output", "ˈaʊtpʊt", "sản lượng", "", "📈", "Our output is ten tons today.", "Sản lượng hôm nay là 10 tấn."], ["paid", "peɪd", "đã trả", "", "💵", "The supplier was paid last week.", "Nhà cung cấp đã được trả tiền tuần trước."], ["night", "naɪt", "ban đêm", "", "🌙", "I work the night shift this week.", "Tuần này tôi làm ca đêm."], ["good", "ɡʊd", "tốt", "", "👍", "Good job, everyone!", "Mọi người làm tốt lắm!"], ["weight", "weɪt", "trọng lượng", "", "⚖️", "Check the weight of each bag.", "Kiểm tra trọng lượng từng bao."], ["heat", "hiːt", "nhiệt, sức nóng", "", "🔥", "Too much heat can damage the mould.", "Nhiệt quá cao có thể làm hỏng khuôn."], ["feed", "fiːd", "nạp liệu", "", "🔽", "Feed the material slowly.", "Cho nguyên liệu vào từ từ."], ["cold", "kəʊld", "lạnh", "", "❄️", "The water is too cold.", "Nước lạnh quá."]],
 sen:['We need to start the night shift at eight.','Chúng ta cần bắt đầu ca đêm lúc 8 giờ.']},
 {t:'Âm cuối -s và -z',sub:'Số nhiều và động từ ngôi thứ ba',how:[
 'Sau âm vô thanh /p t k f/: đọc /s/ như tiếng xì hơi (works, checks).',
 'Sau nguyên âm hoặc âm hữu thanh: đọc /z/, rung như tiếng ong “zzz” (machines, bags).',
 'Sau /s z ʃ tʃ dʒ/: thêm một âm tiết /ɪz/ (boxes, changes).',
 'Tự kiểm tra: đặt ngón tay lên cổ họng, /z/ phải thấy rung, /s/ thì không.'],
-words:[['works','wɜːks','làm việc'],['checks','tʃeks','kiểm tra'],['machines','məˈʃiːnz','máy móc'],['bags','bæɡz','bao, túi'],['tons','tʌnz','tấn'],['orders','ˈɔːdəz','đơn hàng'],['boxes','ˈbɒksɪz','thùng, hộp'],['changes','ˈtʃeɪndʒɪz','thay đổi']],
+words:[["works", "wɜːks", "làm việc", "", "🏭", "She works in the quality team.", "Cô ấy làm ở nhóm chất lượng."], ["checks", "tʃeks", "kiểm tra", "", "✅", "He checks the samples every hour.", "Anh ấy kiểm tra mẫu mỗi giờ."], ["machines", "məˈʃiːnz", "máy móc", "", "⚙️", "All machines are running well.", "Tất cả máy đang chạy tốt."], ["bags", "bæɡz", "bao, túi", "", "🛍️", "We packed five hundred bags.", "Chúng tôi đã đóng 500 bao."], ["tons", "tʌnz", "tấn", "", "🏋️", "Line two made twelve tons.", "Dây chuyền 2 làm được 12 tấn."], ["orders", "ˈɔːdəz", "đơn hàng", "", "📦", "We have three new orders.", "Chúng ta có ba đơn hàng mới."], ["boxes", "ˈbɒksɪz", "thùng, hộp", "", "🗃️", "Put the boxes on the pallet.", "Đặt các thùng lên pallet."], ["changes", "ˈtʃeɪndʒɪz", "thay đổi", "", "🔄", "There are two changes in the plan.", "Kế hoạch có hai thay đổi."], ["pallets", "ˈpælɪts", "pallet kê hàng", "", "🪵", "Stack the pallets near the door.", "Xếp pallet gần cửa."], ["gloves", "ɡlʌvz", "găng tay", "", "🧤", "Wear gloves when you clean.", "Đeo găng tay khi vệ sinh."], ["sizes", "ˈsaɪzɪz", "kích cỡ", "", "📏", "We sell three sizes.", "Chúng tôi bán ba cỡ."], ["days", "deɪz", "ngày", "", "📅", "Delivery takes five days.", "Giao hàng mất năm ngày."]],
 sen:['The machines on both lines make ten tons a day.','Máy trên cả hai dây chuyền làm ra 10 tấn mỗi ngày.']},
 {t:'Đuôi -ed',sub:'Ba cách đọc, không bao giờ là “ét”',how:[
 'Sau âm vô thanh /p k f s ʃ tʃ/: đọc /t/. Checked = /tʃekt/, chỉ một âm tiết.',
 'Sau âm hữu thanh và nguyên âm: đọc /d/. Cleaned = /kliːnd/.',
 'Chỉ sau /t/ hoặc /d/ mới thêm âm tiết /ɪd/: started, loaded.',
 'Đọc âm cuối thật nhẹ, không thêm “ơ” hay “ét” phía sau.'],
-words:[['checked','tʃekt','đã kiểm tra'],['stopped','stɒpt','đã dừng'],['mixed','mɪkst','đã trộn'],['finished','ˈfɪnɪʃt','đã xong'],['used','juːzd','đã dùng'],['cleaned','kliːnd','đã làm sạch'],['started','ˈstɑːtɪd','đã bắt đầu'],['loaded','ˈləʊdɪd','đã chất hàng']],
+words:[["checked", "tʃekt", "đã kiểm tra", "", "✅", "I checked the report this morning.", "Sáng nay tôi đã kiểm tra báo cáo."], ["stopped", "stɒpt", "đã dừng", "", "⛔", "Line three stopped for an hour.", "Dây chuyền 3 đã dừng một tiếng."], ["mixed", "mɪkst", "đã trộn", "", "🌀", "We mixed the powder for ten minutes.", "Chúng tôi đã trộn bột 10 phút."], ["finished", "ˈfɪnɪʃt", "đã xong", "", "🏁", "The order is finished.", "Đơn hàng đã xong."], ["used", "juːzd", "đã dùng", "", "♻️", "We used less power this month.", "Tháng này chúng ta dùng ít điện hơn."], ["cleaned", "kliːnd", "đã làm sạch", "", "🧽", "The team cleaned the floor.", "Nhóm đã lau sàn."], ["started", "ˈstɑːtɪd", "đã bắt đầu", "", "🚀", "The new worker started on Monday.", "Công nhân mới bắt đầu từ thứ Hai."], ["loaded", "ˈləʊdɪd", "đã chất hàng", "", "🚛", "They loaded the container yesterday.", "Hôm qua họ đã đóng hàng lên container."], ["packed", "pækt", "đã đóng gói", "", "🎁", "All bags are packed.", "Tất cả bao đã được đóng gói."], ["delivered", "dɪˈlɪvəd", "đã giao", "", "📬", "The goods were delivered on time.", "Hàng đã giao đúng hạn."], ["repaired", "rɪˈpeəd", "đã sửa", "", "🔧", "The motor was repaired.", "Động cơ đã được sửa."], ["needed", "ˈniːdɪd", "đã cần", "", "⏳", "We needed more time.", "Chúng tôi đã cần thêm thời gian."]],
 sen:['We checked the order and loaded the truck.','Chúng tôi đã kiểm tra đơn hàng và chất lên xe.']},
 {t:'Âm “th”: /θ/ và /ð/',sub:'Đầu lưỡi đặt giữa hai hàm răng',how:[
 'Đặt đầu lưỡi nhẹ <b>giữa</b> hai hàm răng (thò ra một chút), rồi thổi hơi qua khe. Đó là /θ/ (think).',
 '/ð/ cùng vị trí nhưng rung cổ họng (this, the).',
 'Không đọc /θ/ thành “th” hay “t” tiếng Việt, không đọc /ð/ thành “d”.',
 'Tự kiểm tra: soi gương, phải thấy đầu lưỡi.'],
-words:[['think','θɪŋk','nghĩ'],['three','θriː','số ba'],['month','mʌnθ','tháng'],['thanks','θæŋks','cảm ơn'],['this','ðɪs','cái này'],['the','ðə','(mạo từ)'],['together','təˈɡeðə','cùng nhau'],['with','wɪð','với']],
+words:[["think", "θɪŋk", "nghĩ", "", "💭", "I think we can finish today.", "Tôi nghĩ hôm nay mình xong được."], ["three", "θriː", "số ba", "", "3️⃣", "We have three shifts.", "Chúng ta có ba ca."], ["month", "mʌnθ", "tháng", "", "🗓️", "Sales grew this month.", "Doanh số tăng trong tháng này."], ["thanks", "θæŋks", "cảm ơn", "", "🙏", "Thanks for your help.", "Cảm ơn sự giúp đỡ của anh chị."], ["this", "ðɪs", "cái này", "", "👇", "This bag is too heavy.", "Bao này nặng quá."], ["the", "ðə", "(mạo từ)", "", "🔤", "The meeting is at nine.", "Cuộc họp lúc 9 giờ."], ["together", "təˈɡeðə", "cùng nhau", "", "🤝", "Let's solve it together.", "Cùng nhau giải quyết nhé."], ["with", "wɪð", "với", "", "👥", "I work with a great team.", "Tôi làm việc với một đội tuyệt vời."], ["thick", "θɪk", "dày", "", "🧱", "The film is too thick.", "Màng quá dày."], ["third", "θɜːd", "thứ ba", "", "🥉", "This is the third test.", "Đây là lần thử thứ ba."], ["that", "ðæt", "cái kia", "", "👉", "That machine is new.", "Máy kia mới."], ["other", "ˈʌðə", "khác", "", "🔀", "Use the other door.", "Dùng cửa bên kia."]],
 sen:['I think this is the third order this month.','Tôi nghĩ đây là đơn hàng thứ ba trong tháng.']},
 {t:'Phân biệt /s/, /ʃ/, /tʃ/',sub:'“s”, “sh” và “ch”',how:[
 '/s/: răng gần khép, môi dẹt sang hai bên, lưỡi phẳng, tiếng xì “sss”.',
 '/ʃ/: chu môi tròn ra trước, lưỡi lùi vào trong, như khi nói “suỵt” (shift, machine).',
 '/tʃ/: bắt đầu từ /t/ rồi bật mạnh sang /ʃ/, mạnh hơn “ch” tiếng Việt (check).',
 'Người Việt hay đọc /ʃ/ thành “s” và đánh rơi /s/ cuối. Chú ý cả hai.'],
-words:[['safety','ˈseɪfti','an toàn'],['sample','ˈsɑːmpl','mẫu'],['shift','ʃɪft','ca làm việc'],['sheet','ʃiːt','tờ phiếu'],['machine','məˈʃiːn','máy'],['schedule','ˈʃedjuːl','lịch, kế hoạch'],['check','tʃek','kiểm tra'],['change','tʃeɪndʒ','thay đổi']],
+words:[["safety", "ˈseɪfti", "an toàn", "", "🦺", "Safety comes first.", "An toàn là trên hết."], ["sample", "ˈsɑːmpl", "mẫu", "", "🧪", "Send a sample to the customer.", "Gửi mẫu cho khách hàng."], ["shift", "ʃɪft", "ca làm việc", "", "🕗", "My shift starts at six.", "Ca của tôi bắt đầu lúc 6 giờ."], ["sheet", "ʃiːt", "tờ phiếu", "", "📄", "Fill in the check sheet.", "Điền vào phiếu kiểm tra."], ["machine", "məˈʃiːn", "máy", "", "⚙️", "The machine needs oil.", "Máy cần tra dầu."], ["schedule", "ˈʃedjuːl", "lịch, kế hoạch", "", "🗓️", "Here is the production schedule.", "Đây là kế hoạch sản xuất."], ["check", "tʃek", "kiểm tra", "", "🔍", "Can you check the temperature?", "Anh kiểm tra nhiệt độ được không?"], ["change", "tʃeɪndʒ", "thay đổi, thay", "", "🔄", "We need to change the filter.", "Chúng ta cần thay bộ lọc."], ["wash", "wɒʃ", "rửa", "", "🧼", "Wash your hands before lunch.", "Rửa tay trước khi ăn trưa."], ["push", "pʊʃ", "nhấn, đẩy", "", "👆", "Push the button to stop.", "Nhấn nút để dừng."], ["chart", "tʃɑːt", "biểu đồ", "", "📊", "Look at this chart.", "Hãy xem biểu đồ này."], ["sure", "ʃɔː", "chắc chắn", "", "👌", "Are you sure?", "Anh chắc chứ?"]],
 sen:['Please check the safety sheet before the shift.','Vui lòng kiểm tra phiếu an toàn trước ca.']},
 {t:'Không lẫn /l/, /n/, /r/',sub:'Line hay nine, light hay right',how:[
 '/l/: đầu lưỡi chạm lợi trên, hơi thoát ra <b>hai bên lưỡi</b> qua miệng.',
 '/n/: lưỡi cùng chỗ nhưng hơi đi ra <b>mũi</b>.',
 'Mẹo bịt mũi: bịt mũi vẫn đọc được “line” là đúng /l/. Đọc “nine” sẽ nghẹt, đó là /n/.',
 '/r/: cong đầu lưỡi về sau, <b>không</b> chạm vòm miệng, môi hơi tròn, không rung như “r” tiếng Việt.'],
-words:[['line','laɪn','dây chuyền'],['nine','naɪn','số chín'],['low','ləʊ','thấp'],['no','nəʊ','không'],['light','laɪt','đèn, nhẹ'],['right','raɪt','đúng, bên phải'],['late','leɪt','muộn'],['rate','reɪt','tỷ lệ, tốc độ']],
+words:[["line", "laɪn", "dây chuyền", "", "🏭", "Line one is very busy.", "Dây chuyền 1 rất bận."], ["nine", "naɪn", "số chín", "", "9️⃣", "We start at nine.", "Chúng ta bắt đầu lúc 9 giờ."], ["low", "ləʊ", "thấp", "", "📉", "The stock is low.", "Hàng tồn kho đang thấp."], ["no", "nəʊ", "không", "", "🙅", "No, it's not ready yet.", "Không, chưa xong."], ["light", "laɪt", "đèn, nhẹ", "", "💡", "Turn off the light, please.", "Vui lòng tắt đèn."], ["right", "raɪt", "đúng, bên phải", "", "✔️", "You are right.", "Anh nói đúng."], ["late", "leɪt", "muộn", "", "⏰", "The truck is late.", "Xe tải đến muộn."], ["rate", "reɪt", "tỷ lệ, tốc độ", "", "📈", "The defect rate is low.", "Tỷ lệ lỗi thấp."], ["long", "lɒŋ", "dài", "", "📏", "It was a long day.", "Hôm nay là một ngày dài."], ["near", "nɪə", "gần", "", "📍", "The office is near the gate.", "Văn phòng ở gần cổng."], ["red", "red", "màu đỏ", "", "🔴", "Press the red button.", "Nhấn nút đỏ."], ["level", "ˈlevl", "mức", "", "📶", "Check the oil level.", "Kiểm tra mức dầu."]],
 sen:['Line nine is running late right now.','Dây chuyền số 9 đang chậm tiến độ.']},
 {t:'Nguyên âm dài /iː/ và ngắn /ɪ/',sub:'Sai độ dài là đổi nghĩa',how:[
 '/iː/: kéo môi sang hai bên như đang cười, giữ âm “i” <b>dài gấp đôi</b> (leave, feel).',
 '/ɪ/: “i” rất <b>ngắn</b>, miệng thả lỏng, hơi lai “ê” (live, fill).',
 'Dấu ː trong phiên âm nghĩa là kéo dài.',
 'Luyện theo cặp: sit và seat, fill và feel, live và leave.'],
-words:[['leave','liːv','rời đi'],['live','lɪv','sống'],['feel','fiːl','cảm thấy'],['fill','fɪl','đổ đầy, điền'],['seat','siːt','chỗ ngồi'],['sit','sɪt','ngồi'],['team','tiːm','đội, nhóm'],['big','bɪɡ','to']],
+words:[["leave", "liːv", "rời đi", "", "🚪", "I leave work at five.", "Tôi tan làm lúc 5 giờ."], ["live", "lɪv", "sống", "", "🏠", "I live near the factory.", "Tôi sống gần nhà máy."], ["feel", "fiːl", "cảm thấy", "", "😊", "I feel great today.", "Hôm nay tôi thấy rất khỏe."], ["fill", "fɪl", "đổ đầy, điền", "", "✍️", "Fill in your name here.", "Điền tên vào đây."], ["seat", "siːt", "chỗ ngồi", "", "💺", "Please take a seat.", "Mời anh chị ngồi."], ["sit", "sɪt", "ngồi", "", "🪑", "Sit down, please.", "Mời ngồi."], ["team", "tiːm", "đội, nhóm", "", "👥", "Our team is strong.", "Đội của chúng ta rất mạnh."], ["big", "bɪɡ", "to, lớn", "", "🐘", "This is a big order.", "Đây là một đơn hàng lớn."], ["speed", "spiːd", "tốc độ", "", "⚡", "Reduce the speed a little.", "Giảm tốc độ một chút."], ["mix", "mɪks", "trộn", "", "🥣", "Mix the colour well.", "Trộn màu cho đều."], ["keep", "kiːp", "giữ", "", "🔒", "Keep the area clean.", "Giữ khu vực sạch sẽ."], ["ship", "ʃɪp", "giao hàng (tàu)", "", "🚢", "We ship to India every month.", "Chúng tôi giao hàng sang Ấn Độ mỗi tháng."]],
 sen:['Please sit here and fill in this sheet.','Mời ngồi đây và điền vào tờ phiếu này.']},
 {t:'Âm /æ/ và /e/',sub:'“a bẹt” khác với “e”',how:[
 '/æ/: há miệng <b>rộng</b>, hạ hàm dưới, kéo môi sang hai bên. Âm nằm giữa “e” và “a” (bag, batch).',
 '/e/: miệng mở vừa, gần giống “e” tiếng Việt (bed, test).',
 'Mẹo: nói “e” rồi hạ cằm xuống thêm một ngón tay là thành /æ/.',
 'Luyện theo cặp: bad và bed, man và men, bag và beg.'],
-words:[['bag','bæɡ','bao, túi'],['batch','bætʃ','mẻ'],['plastic','ˈplæstɪk','nhựa'],['bad','bæd','tệ, lỗi'],['bed','bed','giường'],['man','mæn','người đàn ông'],['men','men','những người đàn ông'],['test','test','kiểm tra']],
+words:[["bag", "bæɡ", "bao, túi", "", "👜", "One bag weighs twenty-five kilos.", "Một bao nặng 25 ký."], ["batch", "bætʃ", "mẻ", "", "🧺", "This batch is ready.", "Mẻ này đã xong."], ["plastic", "ˈplæstɪk", "nhựa", "", "🧴", "We make plastic materials.", "Chúng tôi sản xuất vật liệu nhựa."], ["bad", "bæd", "tệ, lỗi", "", "👎", "The weather is bad today.", "Hôm nay thời tiết xấu."], ["bed", "bed", "giường", "", "🛏️", "I go to bed early.", "Tôi đi ngủ sớm."], ["man", "mæn", "người đàn ông", "", "👨", "That man is our driver.", "Người đàn ông kia là tài xế của chúng ta."], ["men", "men", "những người đàn ông", "", "👷", "Two men are fixing the roof.", "Hai người đang sửa mái."], ["test", "test", "kiểm tra, thử", "", "🔬", "The test result is good.", "Kết quả kiểm tra tốt."], ["happy", "ˈhæpi", "vui, hài lòng", "", "😀", "The customer is happy.", "Khách hàng hài lòng."], ["black", "blæk", "màu đen", "", "⚫", "We need black colour.", "Chúng ta cần màu đen."], ["ten", "ten", "số mười", "", "🔟", "Wait ten minutes.", "Chờ 10 phút."], ["send", "send", "gửi", "", "📤", "Please send me the file.", "Vui lòng gửi tôi file."]],
 sen:['That batch of plastic bags is bad.','Mẻ túi nhựa đó bị lỗi.']},
 {t:'Âm /f/, /v/, /w/',sub:'Răng trên chạm môi dưới',how:[
 '/f/: răng trên đặt nhẹ lên môi dưới, thổi hơi, không rung.',
 '/v/: cùng vị trí nhưng <b>rung</b>. Không mím hai môi, không đọc thành /b/ hay /w/.',
 '/w/: chu tròn môi như sắp huýt sáo rồi mở nhanh ra, giống “qu” (wait, work).',
 'Âm cuối /v/ (five, twelve) vẫn phải nghe thấy răng chạm môi.'],
-words:[['five','faɪv','số năm'],['very','ˈveri','rất'],['value','ˈvæljuː','giá trị'],['valve','vælv','van'],['twelve','twelv','mười hai'],['wait','weɪt','chờ'],['white','waɪt','trắng'],['work','wɜːk','công việc']],
+words:[["five", "faɪv", "số năm", "", "5️⃣", "We have five lines.", "Chúng ta có năm dây chuyền."], ["very", "ˈveri", "rất", "", "💯", "Thank you very much.", "Cảm ơn rất nhiều."], ["value", "ˈvæljuː", "giá trị", "", "💎", "The order value is high.", "Giá trị đơn hàng cao."], ["valve", "vælv", "van", "", "🚰", "Close the valve slowly.", "Đóng van từ từ."], ["twelve", "twelv", "mười hai", "", "🕛", "Lunch is at twelve.", "Ăn trưa lúc 12 giờ."], ["wait", "weɪt", "chờ", "", "✋", "Please wait a moment.", "Vui lòng chờ một chút."], ["white", "waɪt", "màu trắng", "", "⚪", "This product is white.", "Sản phẩm này màu trắng."], ["work", "wɜːk", "công việc, làm việc", "", "💼", "I love my work.", "Tôi yêu công việc của mình."], ["fix", "fɪks", "sửa", "", "🔧", "Can you fix this machine?", "Anh sửa máy này được không?"], ["voice", "vɔɪs", "giọng nói", "", "🗣️", "Speak in a clear voice.", "Nói bằng giọng rõ ràng."], ["water", "ˈwɔːtə", "nước", "", "💧", "Drink more water.", "Uống thêm nước."], ["week", "wiːk", "tuần", "", "📅", "See you next week.", "Hẹn gặp tuần sau."]],
 sen:['Wait, the valve on line five is very hot.','Khoan đã, van ở dây chuyền 5 rất nóng.']},
 {t:'Cụm phụ âm',sub:'str-, pl-, gr-, -ct mà không chèn “ơ”',how:[
 'Tiếng Việt không có hai phụ âm đứng liền nhau, tiếng Anh thì có: str-, pl-, gr-, -ct.',
 '<b>Không chèn “ơ”</b> vào giữa: street là /striːt/, không phải “xơ-tơ-rít”.',
 'Cách luyện: đọc ngược từ cuối lên: “eet”, “reet”, “treet”, rồi “street”.',
 'Cụm cuối (product: -ct) đọc nhẹ cả hai âm, đừng bỏ âm nào.'],
-words:[['street','striːt','đường phố'],['strong','strɒŋ','mạnh, chắc'],['product','ˈprɒdʌkt','sản phẩm'],['process','ˈprəʊses','quy trình'],['plan','plæn','kế hoạch'],['clean','kliːn','sạch'],['glass','ɡlɑːs','thủy tinh, ly'],['grade','ɡreɪd','cấp hạng']],
+words:[["street", "striːt", "đường phố", "", "🛣️", "Our office is on this street.", "Văn phòng chúng tôi ở con phố này."], ["strong", "strɒŋ", "mạnh, chắc", "", "💪", "This bag is very strong.", "Bao này rất chắc."], ["product", "ˈprɒdʌkt", "sản phẩm", "", "📦", "This is our best product.", "Đây là sản phẩm tốt nhất của chúng tôi."], ["process", "ˈprəʊses", "quy trình", "", "🔁", "Follow the process step by step.", "Làm theo quy trình từng bước."], ["plan", "plæn", "kế hoạch", "", "📝", "What is the plan for today?", "Kế hoạch hôm nay là gì?"], ["clean", "kliːn", "sạch", "", "🧹", "Keep the machine clean.", "Giữ máy sạch sẽ."], ["glass", "ɡlɑːs", "thủy tinh, ly", "", "🥛", "Can I have a glass of water?", "Cho tôi một ly nước được không?"], ["grade", "ɡreɪd", "cấp hạng", "", "🏷️", "This is grade A material.", "Đây là nguyên liệu loại A."], ["plant", "plɑːnt", "nhà máy", "", "🏗️", "Our plant has six lines.", "Nhà máy chúng tôi có sáu dây chuyền."], ["truck", "trʌk", "xe tải", "", "🚚", "The truck arrives at two.", "Xe tải đến lúc 2 giờ."], ["screen", "skriːn", "màn hình", "", "🖥️", "Look at the screen.", "Hãy nhìn màn hình."], ["slow", "sləʊ", "chậm", "", "🐢", "The line is too slow.", "Dây chuyền chạy chậm quá."]],
 sen:['We plan a strong process for the new product.','Chúng ta lên kế hoạch một quy trình chắc chắn cho sản phẩm mới.']},
 {t:'Trọng âm từ',sub:'Một âm tiết to, cao, dài hơn',how:[
 'Tiếng Việt đọc mọi âm tiết bằng nhau. Tiếng Anh có <b>một</b> âm tiết được nhấn: to hơn, cao hơn, dài hơn.',
 'Âm tiết có dấu ˈ trong phiên âm là âm nhấn. Chữ in HOA màu cam chỉ chỗ nhấn.',
 'Âm tiết không nhấn thường đọc lướt thành /ə/ (“ơ” rất nhẹ).',
 'Mẹo: vỗ tay mạnh đúng lúc đọc âm tiết nhấn.'],
-words:[['production','prəˈdʌkʃn','sản xuất','pro·DUC·tion'],['quality','ˈkwɒləti','chất lượng','QUA·li·ty'],['delivery','dɪˈlɪvəri','giao hàng','de·LI·ve·ry'],['equipment','ɪˈkwɪpmənt','thiết bị','e·QUIP·ment'],['manager','ˈmænɪdʒə','quản lý','MA·na·ger'],['temperature','ˈtemprətʃə','nhiệt độ','TEM·pe·ra·ture'],['material','məˈtɪəriəl','nguyên liệu','ma·TE·ri·al'],['customer','ˈkʌstəmə','khách hàng','CUS·to·mer']],
+words:[["production", "prəˈdʌkʃn", "sản xuất", "pro·DUC·tion", "🏭", "Production went up this month.", "Sản lượng tăng trong tháng này."], ["quality", "ˈkwɒləti", "chất lượng", "QUA·li·ty", "⭐", "Quality is our top priority.", "Chất lượng là ưu tiên hàng đầu."], ["delivery", "dɪˈlɪvəri", "giao hàng", "de·LI·ve·ry", "🚚", "Delivery is on Friday.", "Giao hàng vào thứ Sáu."], ["equipment", "ɪˈkwɪpmənt", "thiết bị", "e·QUIP·ment", "🔩", "Check the equipment before use.", "Kiểm tra thiết bị trước khi dùng."], ["manager", "ˈmænɪdʒə", "quản lý", "MA·na·ger", "👩‍💼", "I am the production manager.", "Tôi là quản lý sản xuất."], ["temperature", "ˈtemprətʃə", "nhiệt độ", "TEM·pe·ra·ture", "🌡️", "The temperature is too high.", "Nhiệt độ quá cao."], ["material", "məˈtɪəriəl", "nguyên liệu", "ma·TE·ri·al", "🧱", "The material arrived this morning.", "Nguyên liệu đã về sáng nay."], ["customer", "ˈkʌstəmə", "khách hàng", "CUS·to·mer", "🤝", "The customer visited our plant.", "Khách hàng đã đến thăm nhà máy."], ["maintenance", "ˈmeɪntənəns", "bảo trì", "MAIN·te·nance", "🛠️", "Maintenance is every Sunday.", "Bảo trì vào mỗi Chủ nhật."], ["inventory", "ˈɪnvəntri", "hàng tồn kho", "IN·ven·to·ry", "📋", "Please count the inventory.", "Vui lòng kiểm kê hàng tồn."], ["percent", "pəˈsent", "phần trăm", "per·CENT", "📊", "Ninety percent of orders are on time.", "90% đơn hàng giao đúng hạn."], ["important", "ɪmˈpɔːtnt", "quan trọng", "im·POR·tant", "❗", "This meeting is very important.", "Cuộc họp này rất quan trọng."]],
 sen:['The customer asked about the quality of our material.','Khách hàng hỏi về chất lượng nguyên liệu của chúng ta.']},
 {t:'Nối âm và ngữ điệu',sub:'Nói cả cụm như một từ dài',how:[
 'Phụ âm cuối của từ trước gặp nguyên âm đầu của từ sau thì đọc dính liền: check it out thành “che-ki-taut”.',
 'Câu hỏi Có/Không (Is it…? Can I…?): <b>lên giọng</b> ở cuối ↗.',
 'Câu hỏi có What, Where, How và câu kể: <b>xuống giọng</b> ở cuối ↘.',
 'Nghe chậm, rồi đọc cả cụm một hơi, không ngắt từng chữ.'],
-words:[['check it out','tʃek ɪt aʊt','xem thử đi','che-ki-TAUT'],['turn it on','tɜːn ɪt ɒn','bật nó lên','tơ-ni-TON'],['pick it up','pɪk ɪt ʌp','nhặt lên, lấy hàng','pi-ki-TẮP'],['not at all','nɒt ət ɔːl','không có gì','no-tơ-TOL'],['an hour','ən ˈaʊə','một tiếng','ơ-NAO-ơ'],['is it ready','ɪz ɪt ˈredi','xong chưa? (lên giọng)','i-zit RE-đi ↗'],['what time is it','wɒt taɪm ɪz ɪt','mấy giờ rồi? (xuống giọng)','wot TAI-mi-zit ↘'],['can I help you','kən aɪ ˈhelp juː','tôi giúp gì được? (lên giọng)','kơ-nai HEL-pyu ↗']],
-sen:['Can I turn it on now?','Tôi bật nó lên bây giờ được không?']}
+words:[["check it out", "tʃek ɪt aʊt", "xem thử đi", "che-ki-TAUT", "👀", "We have a new design. Check it out!", "Có mẫu mới đấy. Xem thử đi!"], ["turn it on", "tɜːn ɪt ɒn", "bật nó lên", "tơ-ni-TON", "🔌", "The light is off. Turn it on, please.", "Đèn tắt rồi. Bật lên giúp tôi."], ["pick it up", "pɪk ɪt ʌp", "nhặt lên, lấy hàng", "pi-ki-TẮP", "📦", "Your order is ready. Pick it up at the gate.", "Hàng xong rồi. Lấy ở cổng nhé."], ["not at all", "nɒt ət ɔːl", "không có gì", "no-tơ-TOL", "😊", "Thank you! Not at all.", "Cảm ơn! Không có gì."], ["an hour", "ən ˈaʊə", "một tiếng", "ơ-NAO-ơ", "⏳", "The meeting takes an hour.", "Cuộc họp kéo dài một tiếng."], ["is it ready", "ɪz ɪt ˈredi", "xong chưa? (lên giọng)", "i-zit RE-đi ↗", "❓", "Is it ready for the customer?", "Đã sẵn sàng cho khách chưa?"], ["what time is it", "wɒt taɪm ɪz ɪt", "mấy giờ rồi? (xuống giọng)", "wot TAI-mi-zit ↘", "🕒", "Excuse me, what time is it?", "Xin lỗi, mấy giờ rồi ạ?"], ["can I help you", "kən aɪ ˈhelp juː", "tôi giúp gì được? (lên giọng)", "kơ-nai HEL-pyu ↗", "🙋", "Hello, can I help you?", "Xin chào, tôi giúp gì được ạ?"], ["get it done", "ɡet ɪt dʌn", "làm cho xong", "ge-ti-DĂN", "✅", "Don't worry, we'll get it done.", "Đừng lo, chúng tôi sẽ làm xong."], ["look at it", "lʊk ət ɪt", "nhìn nó", "lu-kơ-TIT", "👁️", "There's a crack here. Look at it.", "Có vết nứt ở đây. Nhìn này."], ["is that all", "ɪz ðæt ɔːl", "hết chưa? (lên giọng)", "i-zđa-TOL ↗", "❔", "Two boxes. Is that all?", "Hai thùng. Hết chưa?"], ["where is it", "weər ɪz ɪt", "nó ở đâu? (xuống giọng)", "we-ri-ZIT ↘", "📍", "I can't find the key. Where is it?", "Tôi không tìm thấy chìa khóa. Nó ở đâu?"]],
+sen:['Can I turn it on now?','Tôi bật nó lên bây giờ được không?']},
+{"t": "Sản xuất hạt nhựa", "sub": "Từ vựng dây chuyền taical", "kind": "vocab", "how": ["Từ dài chỉ có một âm nhấn: chữ in HOA màu cam là chỗ nhấn (ex·TRU·der).", "Đuôi -er đọc nhẹ thành /ə/ kiểu Anh-Anh, không cong lưỡi: cutter /ˈkʌtə/.", "/ʃ/ và /tʃ/ trong dispersion, moisture: chu môi ra trước.", "Nói cả câu ví dụ để quen dùng từ trong công việc hằng ngày."], "words": [["extruder", "ɪkˈstruːdə", "máy đùn", "ex·TRU·der", "🏭", "The extruder runs at full speed.", "Máy đùn đang chạy hết tốc độ."], ["pellet", "ˈpelɪt", "hạt nhựa", "PEL·let", "⚪", "The pellets look uniform today.", "Hôm nay hạt nhựa nhìn đều."], ["masterbatch", "ˈmɑːstəbætʃ", "hạt phụ gia, hạt màu", "MAS·ter·batch", "🎨", "We produce filler masterbatch.", "Chúng tôi sản xuất hạt phụ gia độn."], ["calcium carbonate", "ˌkælsiəm ˈkɑːbəneɪt", "canxi cacbonat (CaCO₃)", "cal·cium CAR·bo·nate", "🪨", "Calcium carbonate is our main filler.", "Canxi cacbonat là chất độn chính."], ["filler", "ˈfɪlə", "chất độn", "FIL·ler", "🧂", "Increase the filler to seventy percent.", "Tăng chất độn lên 70%."], ["resin", "ˈrezɪn", "nhựa nền", "RE·sin", "🧴", "Check the resin before mixing.", "Kiểm tra nhựa nền trước khi trộn."], ["hopper", "ˈhɒpə", "phễu nạp liệu", "HOP·per", "🔽", "The hopper is almost empty.", "Phễu nạp liệu gần hết."], ["screw", "skruː", "trục vít", "", "🔩", "Clean the screw every month.", "Vệ sinh trục vít hằng tháng."], ["cooling", "ˈkuːlɪŋ", "làm mát", "COOL·ing", "💧", "Check the cooling water.", "Kiểm tra nước làm mát."], ["cutter", "ˈkʌtə", "dao cắt hạt", "CUT·ter", "✂️", "The cutter blade is worn.", "Lưỡi dao cắt bị mòn."], ["moisture", "ˈmɔɪstʃə", "độ ẩm", "MOIS·ture", "💦", "The moisture is too high.", "Độ ẩm quá cao."], ["dispersion", "dɪˈspɜːʃn", "độ phân tán", "dis·PER·sion", "🌫️", "Good dispersion means good quality.", "Phân tán tốt thì chất lượng tốt."]], "sen": ["Check the moisture before the resin goes into the hopper.", "Kiểm tra độ ẩm trước khi cho nhựa nền vào phễu."]},
+{"t": "Chất lượng, điện năng, báo cáo", "sub": "Từ vựng họp và báo cáo sản xuất", "kind": "vocab", "how": ["Chú ý âm cuối /t/, /d/: defect, report, standard, target.", "Đuôi -tion đọc là /ʃn/: inspection, consumption.", "electricity nhấn ở âm tiết thứ ba: e·lec·TRI·ci·ty.", "Khi báo cáo số liệu, nói chậm và rõ từng con số."], "words": [["defect", "ˈdiːfekt", "lỗi sản phẩm", "DE·fect", "🚫", "We found a defect in batch five.", "Chúng tôi thấy lỗi ở mẻ số 5."], ["inspection", "ɪnˈspekʃn", "kiểm tra, kiểm định", "in·SPEC·tion", "🔎", "The inspection starts at ten.", "Buổi kiểm tra bắt đầu lúc 10 giờ."], ["standard", "ˈstændəd", "tiêu chuẩn", "STAN·dard", "📐", "This batch meets the standard.", "Mẻ này đạt tiêu chuẩn."], ["complaint", "kəmˈpleɪnt", "khiếu nại", "com·PLAINT", "📢", "We received a customer complaint.", "Chúng tôi nhận được khiếu nại của khách."], ["yield", "jiːld", "hiệu suất thành phẩm", "", "📈", "The yield improved this week.", "Hiệu suất tăng trong tuần này."], ["downtime", "ˈdaʊntaɪm", "thời gian dừng máy", "DOWN·time", "⏸️", "We must reduce downtime.", "Chúng ta phải giảm thời gian dừng máy."], ["electricity", "ɪˌlekˈtrɪsəti", "điện", "e·lec·TRI·ci·ty", "⚡", "Electricity costs are rising.", "Chi phí điện đang tăng."], ["consumption", "kənˈsʌmpʃn", "mức tiêu hao", "con·SUMP·tion", "🔋", "Power consumption fell last month.", "Tiêu hao điện giảm trong tháng trước."], ["target", "ˈtɑːɡɪt", "mục tiêu", "TAR·get", "🎯", "We reached our monthly target.", "Chúng ta đã đạt mục tiêu tháng."], ["report", "rɪˈpɔːt", "báo cáo", "re·PORT", "📑", "I will send the report tomorrow.", "Mai tôi sẽ gửi báo cáo."], ["operator", "ˈɒpəreɪtə", "công nhân vận hành", "OP·e·ra·tor", "👷", "Each operator checks the machine.", "Mỗi công nhân vận hành đều kiểm tra máy."], ["training", "ˈtreɪnɪŋ", "đào tạo", "TRAIN·ing", "🎓", "New workers need safety training.", "Công nhân mới cần được đào tạo an toàn."]], "sen": ["Our yield is up, but electricity consumption is still above target.", "Hiệu suất tăng nhưng tiêu hao điện vẫn trên mục tiêu."]},
+{"t": "Kho, giao hàng, nhà cung cấp", "sub": "Từ vựng kho vận và mua hàng", "kind": "vocab", "how": ["Cụm phụ âm cuối: forklift /-ft/, shipment /-nt/, urgent /-nt/. Đọc nhẹ cả hai âm.", "/ɜː/ trong urgent, confirm: “ơ” kéo dài, môi thả lỏng.", "Nhấn đúng âm tiết: sup·PLI·er, con·TAI·ner.", "Luyện câu ví dụ như đang gọi điện cho nhà cung cấp hoặc khách hàng."], "words": [["warehouse", "ˈweəhaʊs", "kho hàng", "WARE·house", "🏬", "Move the bags to the warehouse.", "Chuyển bao vào kho."], ["forklift", "ˈfɔːklɪft", "xe nâng", "FORK·lift", "🚜", "Only trained staff can drive the forklift.", "Chỉ nhân viên được đào tạo mới được lái xe nâng."], ["shipment", "ˈʃɪpmənt", "lô hàng", "SHIP·ment", "🚢", "The shipment leaves on Monday.", "Lô hàng xuất vào thứ Hai."], ["container", "kənˈteɪnə", "container", "con·TAI·ner", "📦", "We need two containers this week.", "Tuần này cần hai container."], ["supplier", "səˈplaɪə", "nhà cung cấp", "sup·PLI·er", "🏢", "Call the supplier about the price.", "Gọi nhà cung cấp về giá."], ["invoice", "ˈɪnvɔɪs", "hóa đơn", "IN·voice", "🧾", "Please check the invoice.", "Vui lòng kiểm tra hóa đơn."], ["label", "ˈleɪbl", "nhãn", "LA·bel", "🏷️", "Put a label on every bag.", "Dán nhãn lên mỗi bao."], ["stock", "stɒk", "hàng tồn", "", "📚", "How much stock do we have?", "Chúng ta còn bao nhiêu hàng tồn?"], ["deadline", "ˈdedlaɪn", "hạn chót", "DEAD·line", "⏰", "The deadline is next Friday.", "Hạn chót là thứ Sáu tới."], ["quantity", "ˈkwɒntəti", "số lượng", "QUAN·ti·ty", "🔢", "Please confirm the quantity.", "Vui lòng xác nhận số lượng."], ["urgent", "ˈɜːdʒənt", "gấp", "UR·gent", "🚨", "This order is urgent.", "Đơn hàng này gấp."], ["confirm", "kənˈfɜːm", "xác nhận", "con·FIRM", "☑️", "Can you confirm the delivery date?", "Anh xác nhận ngày giao hàng được không?"]], "sen": ["Please confirm the quantity before the shipment leaves the warehouse.", "Vui lòng xác nhận số lượng trước khi lô hàng rời kho."]}
 ];
+const NSOUND=12;
+// Phiên âm từng từ trong câu (Anh-Anh)
+const WIPA={"we": "wiː", "need": "niːd", "to": "tə", "start": "stɑːt", "the": "ðə", "night": "naɪt", "shift": "ʃɪft", "at": "ət", "eight": "eɪt", "machines": "məˈʃiːnz", "on": "ɒn", "both": "bəʊθ", "lines": "laɪnz", "make": "meɪk", "ten": "ten", "tons": "tʌnz", "a": "ə", "day": "deɪ", "checked": "tʃekt", "order": "ˈɔːdə", "and": "ənd", "loaded": "ˈləʊdɪd", "truck": "trʌk", "i": "aɪ", "think": "θɪŋk", "this": "ðɪs", "is": "ɪz", "third": "θɜːd", "month": "mʌnθ", "please": "pliːz", "check": "tʃek", "safety": "ˈseɪfti", "sheet": "ʃiːt", "before": "bɪˈfɔː", "line": "laɪn", "nine": "naɪn", "running": "ˈrʌnɪŋ", "late": "leɪt", "right": "raɪt", "now": "naʊ", "sit": "sɪt", "here": "hɪə", "fill": "fɪl", "in": "ɪn", "that": "ðæt", "batch": "bætʃ", "of": "əv", "plastic": "ˈplæstɪk", "bags": "bæɡz", "bad": "bæd", "wait": "weɪt", "valve": "vælv", "five": "faɪv", "very": "ˈveri", "hot": "hɒt", "plan": "plæn", "strong": "strɒŋ", "process": "ˈprəʊses", "for": "fə", "new": "njuː", "product": "ˈprɒdʌkt", "customer": "ˈkʌstəmə", "asked": "ɑːskt", "about": "əˈbaʊt", "quality": "ˈkwɒləti", "our": "aʊə", "material": "məˈtɪəriəl", "can": "kən", "turn": "tɜːn", "it": "ɪt", "good": "ɡʊd", "morning": "ˈmɔːnɪŋ", "everyone": "ˈevriwʌn", "let's": "lets", "meeting": "ˈmiːtɪŋ", "three": "θriː", "stopped": "stɒpt", "o'clock": "əˈklɒk", "temperature": "ˈtemprətʃə", "every": "ˈevri", "two": "tuː", "hours": "aʊəz", "more": "mɔː", "raw": "rɔː", "next": "nekst", "output": "ˈaʊtpʊt", "today": "təˈdeɪ", "higher": "ˈhaɪə", "than": "ðən", "yesterday": "ˈjestədeɪ", "wear": "weə", "your": "jɔː", "gloves": "ɡlʌvz", "all": "ɔːl", "times": "taɪmz", "wants": "wɒnts", "by": "baɪ", "friday": "ˈfraɪdeɪ", "machine": "məˈʃiːn", "making": "ˈmeɪkɪŋ", "strange": "streɪndʒ", "noise": "nɔɪz", "find": "faɪnd", "root": "ruːt", "cause": "kɔːz", "first": "fɜːst", "you": "juː", "send": "send", "me": "miː", "report": "rɪˈpɔːt", "afternoon": "ˌɑːftəˈnuːn", "agree": "əˈɡriː", "with": "wɪð", "but": "bʌt", "data": "ˈdeɪtə", "could": "kʊd", "explain": "ɪkˈspleɪn", "again": "əˈɡen", "main": "meɪn", "goal": "ɡəʊl", "reduce": "rɪˈdjuːs", "waste": "weɪst", "let": "let", "show": "ʃəʊ", "numbers": "ˈnʌmbəz", "what": "wɒt", "do": "duː", "thank": "θæŋk", "hard": "hɑːd", "work": "wɜːk", "week": "wiːk", "nice": "naɪs", "meet": "miːt", "plastics": "ˈplæstɪks", "factory": "ˈfæktri", "how": "haʊ", "was": "wəz", "weekend": "ˈwiːkend", "i'd": "aɪd", "like": "laɪk", "cup": "kʌp", "coffee": "ˈkɒfi", "excuse": "ɪkˈskjuːz", "where": "weə", "station": "ˈsteɪʃn", "sorry": "ˈsɒri", "didn't": "ˈdɪdnt", "catch": "kætʃ", "see": "siː", "tomorrow": "təˈmɒrəʊ", "have": "hæv", "evening": "ˈiːvnɪŋ", "eat": "iːt", "lunch": "lʌntʃ", "twelve": "twelv", "workers": "ˈwɜːkəz", "will": "wɪl", "seven": "ˈsevn", "load": "ləʊd", "supplier": "səˈplaɪə", "paid": "peɪd", "last": "lɑːst", "job": "dʒɒb", "weight": "weɪt", "each": "iːtʃ", "bag": "bæɡ", "too": "tuː", "much": "mʌtʃ", "heat": "hiːt", "damage": "ˈdæmɪdʒ", "mould": "məʊld", "feed": "fiːd", "slowly": "ˈsləʊli", "water": "ˈwɔːtə", "cold": "kəʊld", "she": "ʃiː", "works": "wɜːks", "team": "tiːm", "he": "hiː", "checks": "tʃeks", "samples": "ˈsɑːmplz", "hour": "aʊə", "are": "ɑː", "well": "wel", "packed": "pækt", "hundred": "ˈhʌndrəd", "made": "meɪd", "orders": "ˈɔːdəz", "put": "pʊt", "boxes": "ˈbɒksɪz", "pallet": "ˈpælɪt", "there": "ðeə", "changes": "ˈtʃeɪndʒɪz", "stack": "stæk", "pallets": "ˈpælɪts", "near": "nɪə", "door": "dɔː", "when": "wen", "clean": "kliːn", "sell": "sel", "sizes": "ˈsaɪzɪz", "delivery": "dɪˈlɪvəri", "takes": "teɪks", "days": "deɪz", "an": "ən", "mixed": "mɪkst", "powder": "ˈpaʊdə", "minutes": "ˈmɪnɪts", "finished": "ˈfɪnɪʃt", "used": "juːzd", "less": "les", "power": "ˈpaʊə", "cleaned": "kliːnd", "floor": "flɔː", "worker": "ˈwɜːkə", "started": "ˈstɑːtɪd", "monday": "ˈmʌndeɪ", "they": "ðeɪ", "container": "kənˈteɪnə", "goods": "ɡʊdz", "were": "wɜː", "delivered": "dɪˈlɪvəd", "time": "taɪm", "motor": "ˈməʊtə", "repaired": "rɪˈpeəd", "needed": "ˈniːdɪd", "finish": "ˈfɪnɪʃ", "shifts": "ʃɪfts", "sales": "seɪlz", "grew": "ɡruː", "thanks": "θæŋks", "help": "help", "heavy": "ˈhevi", "solve": "sɒlv", "together": "təˈɡeðə", "great": "ɡreɪt", "film": "fɪlm", "thick": "θɪk", "test": "test", "use": "juːs", "other": "ˈʌðə", "comes": "kʌmz", "sample": "ˈsɑːmpl", "my": "maɪ", "starts": "stɑːts", "six": "sɪks", "needs": "niːdz", "oil": "ɔɪl", "production": "prəˈdʌkʃn", "schedule": "ˈʃedjuːl", "change": "tʃeɪndʒ", "filter": "ˈfɪltə", "wash": "wɒʃ", "hands": "hændz", "push": "pʊʃ", "button": "ˈbʌtn", "stop": "stɒp", "look": "lʊk", "chart": "tʃɑːt", "sure": "ʃɔː", "one": "wʌn", "busy": "ˈbɪzi", "stock": "stɒk", "low": "ləʊ", "no": "nəʊ", "it's": "ɪts", "not": "nɒt", "ready": "ˈredi", "yet": "jet", "off": "ɒf", "light": "laɪt", "defect": "ˈdiːfekt", "rate": "reɪt", "long": "lɒŋ", "office": "ˈɒfɪs", "gate": "ɡeɪt", "press": "pres", "red": "red", "level": "ˈlevl", "leave": "liːv", "live": "lɪv", "feel": "fiːl", "name": "neɪm", "take": "teɪk", "seat": "siːt", "down": "daʊn", "big": "bɪɡ", "speed": "spiːd", "little": "ˈlɪtl", "mix": "mɪks", "colour": "ˈkʌlə", "keep": "kiːp", "area": "ˈeəriə", "ship": "ʃɪp", "india": "ˈɪndiə", "weighs": "weɪz", "twenty": "ˈtwenti", "kilos": "ˈkiːləʊz", "materials": "məˈtɪəriəlz", "weather": "ˈweðə", "go": "ɡəʊ", "bed": "bed", "early": "ˈɜːli", "man": "mæn", "driver": "ˈdraɪvə", "men": "men", "fixing": "ˈfɪksɪŋ", "roof": "ruːf", "result": "rɪˈzʌlt", "happy": "ˈhæpi", "black": "blæk", "file": "faɪl", "value": "ˈvæljuː", "high": "haɪ", "close": "kləʊz", "moment": "ˈməʊmənt", "white": "waɪt", "love": "lʌv", "fix": "fɪks", "speak": "spiːk", "clear": "klɪə", "voice": "vɔɪs", "drink": "drɪŋk", "street": "striːt", "best": "best", "follow": "ˈfɒləʊ", "step": "step", "glass": "ɡlɑːs", "grade": "ɡreɪd", "plant": "plɑːnt", "has": "hæz", "arrives": "əˈraɪvz", "screen": "skriːn", "slow": "sləʊ", "went": "went", "up": "ʌp", "top": "tɒp", "priority": "praɪˈɒrəti", "equipment": "ɪˈkwɪpmənt", "am": "æm", "manager": "ˈmænɪdʒə", "arrived": "əˈraɪvd", "visited": "ˈvɪzɪtɪd", "maintenance": "ˈmeɪntənəns", "sunday": "ˈsʌndeɪ", "count": "kaʊnt", "inventory": "ˈɪnvəntri", "ninety": "ˈnaɪnti", "percent": "pəˈsent", "important": "ɪmˈpɔːtnt", "design": "dɪˈzaɪn", "out": "aʊt", "pick": "pɪk", "hello": "həˈləʊ", "don't": "dəʊnt", "worry": "ˈwʌri", "we'll": "wiːl", "get": "ɡet", "done": "dʌn", "there's": "ðeəz", "crack": "kræk", "can't": "kɑːnt", "key": "kiː", "extruder": "ɪkˈstruːdə", "runs": "rʌnz", "full": "fʊl", "pellets": "ˈpelɪts", "uniform": "ˈjuːnɪfɔːm", "produce": "prəˈdjuːs", "filler": "ˈfɪlə", "masterbatch": "ˈmɑːstəbætʃ", "calcium": "ˈkælsiəm", "carbonate": "ˈkɑːbəneɪt", "increase": "ɪnˈkriːs", "seventy": "ˈsevnti", "resin": "ˈrezɪn", "mixing": "ˈmɪksɪŋ", "hopper": "ˈhɒpə", "almost": "ˈɔːlməʊst", "empty": "ˈempti", "screw": "skruː", "cooling": "ˈkuːlɪŋ", "cutter": "ˈkʌtə", "blade": "bleɪd", "worn": "wɔːn", "moisture": "ˈmɔɪstʃə", "dispersion": "dɪˈspɜːʃn", "means": "miːnz", "found": "faʊnd", "inspection": "ɪnˈspekʃn", "meets": "miːts", "standard": "ˈstændəd", "received": "rɪˈsiːvd", "complaint": "kəmˈpleɪnt", "yield": "jiːld", "improved": "ɪmˈpruːvd", "must": "mʌst", "downtime": "ˈdaʊntaɪm", "electricity": "ɪˌlekˈtrɪsəti", "costs": "kɒsts", "rising": "ˈraɪzɪŋ", "consumption": "kənˈsʌmpʃn", "fell": "fel", "reached": "riːtʃt", "monthly": "ˈmʌnθli", "target": "ˈtɑːɡɪt", "operator": "ˈɒpəreɪtə", "training": "ˈtreɪnɪŋ", "move": "muːv", "warehouse": "ˈweəhaʊs", "only": "ˈəʊnli", "trained": "treɪnd", "staff": "stɑːf", "drive": "draɪv", "forklift": "ˈfɔːklɪft", "shipment": "ˈʃɪpmənt", "leaves": "liːvz", "containers": "kənˈteɪnəz", "call": "kɔːl", "price": "praɪs", "invoice": "ˈɪnvɔɪs", "label": "ˈleɪbl", "deadline": "ˈdedlaɪn", "confirm": "kənˈfɜːm", "quantity": "ˈkwɒntəti", "urgent": "ˈɜːdʒənt", "date": "deɪt", "goes": "ɡəʊz", "into": "ˈɪntə", "still": "stɪl", "above": "əˈbʌv", "earlier": "ˈɜːliə", "expected": "ɪkˈspektɪd", "whether": "ˈweðə", "changed": "tʃeɪndʒd", "rose": "rəʊz", "sharply": "ˈʃɑːpli", "so": "səʊ", "results": "rɪˈzʌlts", "lot": "lɒt"};
+// Bài kiểm tra trình độ: [mức, câu/từ, IPA, nghĩa]
+const TEST=[[0, "good", "ɡʊd", "tốt"], [0, "five", "faɪv", "số năm"], [0, "red", "red", "màu đỏ"], [0, "nine", "naɪn", "số chín"], [1, "think", "θɪŋk", "nghĩ"], [1, "shift", "ʃɪft", "ca làm việc"], [1, "changes", "ˈtʃeɪndʒɪz", "thay đổi"], [1, "weight", "weɪt", "trọng lượng"], [2, "Thanks for your help.", "", "Cảm ơn sự giúp đỡ."], [2, "The truck is late.", "", "Xe tải đến muộn."], [2, "Wash your hands before lunch.", "", "Rửa tay trước khi ăn trưa."], [2, "Can you fix this machine?", "", "Anh sửa máy này được không?"], [3, "We checked the order and loaded the truck.", "", "Chúng tôi đã kiểm tra đơn và chất hàng lên xe."], [3, "Please check the safety sheet before the shift.", "", "Vui lòng kiểm tra phiếu an toàn trước ca."], [3, "The machines on both lines make ten tons a day.", "", "Máy trên hai dây chuyền làm 10 tấn mỗi ngày."], [3, "Wait, the valve on line five is very hot.", "", "Khoan, van ở dây chuyền 5 rất nóng."], [4, "I think the third batch was finished earlier than we expected.", "", "Tôi nghĩ mẻ thứ ba đã xong sớm hơn dự kiến."], [4, "Could you check whether the delivery schedule has changed this week?", "", "Anh kiểm tra giúp lịch giao hàng tuần này có thay đổi không?"], [4, "The temperature rose sharply, so we stopped the line and cleaned the filter.", "", "Nhiệt độ tăng mạnh nên chúng tôi dừng dây chuyền và vệ sinh bộ lọc."], [4, "Thank you all for your hard work; our quality results have improved a lot.", "", "Cảm ơn mọi người đã làm việc chăm chỉ, kết quả chất lượng đã cải thiện nhiều."]];
+const LV=['A1','A2','B1','B2','C1'];
 // Cặp tối thiểu: [từ A, IPA A, nghĩa A, từ B, IPA B, nghĩa B, bài]
 const PAIRS=[
 ['sit','sɪt','ngồi','seat','siːt','chỗ ngồi',6],['live','lɪv','sống','leave','liːv','rời đi',6],['fill','fɪl','đổ đầy','feel','fiːl','cảm thấy',6],['ship','ʃɪp','con tàu','sheep','ʃiːp','con cừu',6],
@@ -304,15 +330,17 @@ function bump(){const t=today();S.days[t]=(S.days[t]||0)+1}
 function streak(){let t=today(),n=0;if(!S.days[t])t--;while(S.days[t]){n++;t--}return n}
 const best=k=>(S.w[k]&&S.w[k].b)||0;
 function record(k,s){const r=S.w[k]=S.w[k]||{b:0,n:0};r.n++;if(s>r.b)r.b=s;bump();save()}
-const T=()=>S.set.target;
+const LT=[0.75,0.75,0.8,0.85,0.88,0.9];
+const T=()=>(S.lvN===undefined||S.set.tman)?S.set.target:LT[S.lvN];
 const cls=s=>!s?'':s>=T()?'ok':s>=0.55?'near':'bad';
 function lessonPct(i){const ws=LESSONS[i].words;return ws.reduce((a,w)=>a+best('w:'+w[0]),0)/ws.length}
 
 /* ================= MỤC LUYỆN ================= */
 const ITEMS={};
-LESSONS.forEach((L,i)=>{L.words.forEach(w=>{ITEMS['w:'+w[0]]={k:'w:'+w[0],w:w[0],p:w[1],vn:w[2],st:w[3]||'',kind:'w'}});
+LESSONS.forEach((L,i)=>{L.words.forEach(w=>{ITEMS['w:'+w[0]]={k:'w:'+w[0],w:w[0],p:w[1],vn:w[2],st:w[3]||'',emo:w[4]||'',ex:w[5]?'x:'+w[0]:'',kind:'w'};if(w[5])ITEMS['x:'+w[0]]={k:'x:'+w[0],w:w[5],vn:w[6],kind:'s',mini:true}});
   ITEMS['ls:'+i]={k:'ls:'+i,w:L.sen[0],vn:L.sen[1],kind:'s'}});
 SENTS.forEach((s,i)=>{ITEMS['s:'+i]={k:'s:'+i,w:s[1],vn:s[2],kind:'s',g:s[0]}});
+TEST.forEach((t,i)=>{ITEMS['t:'+i]={k:'t:'+i,w:t[1],p:t[2],vn:t[3],kind:t[2]?'w':'s',test:true}});
 
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const IC={
@@ -333,22 +361,27 @@ function guideHtml(it){
   tips.push('<b>Thứ tự luyện:</b> nghe chậm, đọc theo từng phần, nghe tốc độ thường, rồi bấm Nói.');
   return tips.map(t=>'<div>'+t+'</div>').join('');
 }
+function sentHTML(t){
+  if(S.set.ipa===false)return esc(t);
+  return t.split(/\s+/).map(tok=>{const parts=tok.split('-').map(x=>x.replace(/^[^A-Za-z']+|[^A-Za-z']+$/g,'').toLowerCase());
+    const ip=parts.map(x=>WIPA[x]||'').filter(Boolean).join(' ');return `<span class="tk"><b>${esc(tok)}</b><i>${ip?esc(ip):'&nbsp;'}</i></span>`}).join(' ');
+}
 function pc(k){
   const it=ITEMS[k],b=best(k),s=it.kind==='s';
-  return `<div class="pc${s?' sent':''}${b>=T()?' pass':''}" data-k="${k}">
-  <div class="top"><div><div class="pw">${esc(it.w)}</div>
+  return `<div class="pc${s?' sent':''}${it.mini?' mini':''}${b>=T()?' pass':''}" data-k="${k}">
+  ${it.mini?'<div class="exlab">Câu ví dụ</div>':''}<div class="top"><div class="wl">${it.emo?`<span class="emo" aria-hidden="true">${it.emo}</span>`:''}<div><div class="pw${s?' tks':''}">${s?sentHTML(it.w):esc(it.w)}</div>
   ${it.st?`<div class="st">${esc(it.st)}</div>`:''}
-  <div class="pp">${it.p?'/'+esc(it.p)+'/ · ':''}${esc(it.vn)}</div></div>
+  <div class="pp">${it.p?'/'+esc(it.p)+'/ · ':''}${esc(it.vn)}</div></div></div>
   <span class="pill ${cls(b)}" data-pill>${b?Math.round(b*100)+'%':'chưa nói'}</span></div>
   <div class="row">
-   <button class="ib" data-a="say">${IC.play}Nghe</button>
+   ${it.test||it.hide?'':`<button class="ib" data-a="say">${IC.play}Nghe</button>
    <button class="ib" data-a="slow">${IC.slow}Chậm</button>
    ${it.p?`<button class="ib" data-a="guide">${IC.book}Cách đọc</button>`:''}
-   <button class="ib" data-a="rec">${IC.rec}Ghi âm</button>
+   <button class="ib" data-a="rec">${IC.rec}Ghi âm</button>`}
    <button class="ib mic" data-a="mic">${IC.mic}Nói</button>
   </div>
   <div class="guide" hidden>${it.p?guideHtml(it):''}</div>
-  <div class="fb" hidden></div><div class="recbox"></div></div>`;
+  <div class="fb" hidden></div><div class="recbox"></div>${it.ex?pc(it.ex):''}</div>`;
 }
 
 /* ================= GIỌNG ĐỌC MẪU ================= */
@@ -419,7 +452,7 @@ function listen(onPart,maxMs){ // phải gọi thẳng từ cú bấm
 }
 const NUM='zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' '),TENS='  twenty thirty forty fifty sixty seventy eighty ninety'.split(' ');
 function numW(n){n=+n;if(n<20)return NUM[n];if(n<100)return TENS[Math.floor(n/10)]+(n%10?' '+NUM[n%10]:'');return String(n)}
-function norm(s){return String(s||'').replace(/\b(\d{1,2}):00\b/g,"$1 o'clock").replace(/\d+/g,m=>' '+numW(m)+' ').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z' ]+/g,' ').replace(/\s+/g,' ').trim()}
+function norm(s){return String(s||'').replace(/\b(\d{1,2}):00\b/g,"$1 o'clock").replace(/%/g,' percent ').replace(/\d+/g,m=>' '+numW(m)+' ').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z' ]+/g,' ').replace(/\s+/g,' ').trim()}
 function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let prev=Array.from({length:n+1},(_,j)=>j);
   for(let i=1;i<=m;i++){const row=[i];for(let j=1;j<=n;j++)row.push(Math.min(row[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1)));prev=row}return prev[n]}
 function sim(a,b){a=norm(a);b=norm(b);if(!a||!b)return 0;return 1-lev(a,b)/Math.max(a.length,b.length)}
@@ -458,7 +491,7 @@ function doMic(btn,card){
   const it=ITEMS[card.dataset.k];
   document.querySelectorAll('.ib.mic.on').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  showFb(card,'','Đang nghe… hãy nói: <b>'+esc(it.w)+'</b><br><span class="muted">Nói xong máy tự chấm, không cần bấm gì thêm.</span>');
+  showFb(card,'',(it.hide?'Đang nghe… hãy đọc theo phiên âm':'Đang nghe… hãy nói: <b>'+esc(it.w)+'</b>')+'<br><span class="muted">Nói xong máy tự chấm, không cần bấm gì thêm.</span>');
   listen(t=>showFb(card,'','Đang nghe: <i>'+esc(t)+'</i>'),it.kind==='s'?11000:6000).then(({alts,err})=>{
     btn.classList.remove('on');
     if(err==='cancel')return;
@@ -471,20 +504,24 @@ function doMic(btn,card){
       if(r.mk.includes(false))h+='<div class="muted">Từ gạch đỏ là từ máy chưa nghe ra, luyện riêng từ đó rồi nói lại cả câu.</div>'}
     h+='<div class="muted">Máy nghe được: “'+esc(r.heard)+'”</div>';
     showFb(card,c,h);
+    if(r.mk){const ws=it.w.split(/\s+/);r.mk.forEach((ok,i)=>{if(!ok)missAdd(norm(ws[i]))});save()}else if(it.kind==='w'&&r.s<0.6&&!it.hide&&!it.test)missAdd(norm(it.w));
     const pill=card.querySelector('[data-pill]'),b=best(it.k);pill.className='pill '+cls(b);pill.textContent=Math.round(b*100)+'%';
     card.classList.toggle('pass',b>=T());
-    if(card.closest('#v-session')&&r.s>=T()){const at=SES.i;setTimeout(()=>{if(SES.i===at&&curView==='session'){SES.i++;renderSession();autoSay()}},1500)}
+    if(card.closest('#v-test')){TS.sc[TS.i]=Math.max(TS.sc[TS.i]||0,r.s);const nb=document.getElementById('tNext');if(nb)nb.hidden=false}
+    if(card.closest('#v-ipa')&&IG.list.length){IG.sc[IG.i]=Math.max(IG.sc[IG.i]||0,r.s);igReveal()}
+    if(card.closest('#v-session')&&!card.parentElement.closest('.pc')&&r.s>=T()){const at=SES.i;setTimeout(()=>{if(SES.i===at&&curView==='session'){SES.i++;renderSession();autoSay()}},1500)}
     refreshHome();
   });
 }
 let mr=null;
 const capIn=document.createElement('input');capIn.type='file';capIn.accept='audio/*';capIn.setAttribute('capture','');capIn.hidden=true;document.body.appendChild(capIn);
 let capCard=null;
-capIn.addEventListener('change',()=>{const f=capIn.files&&capIn.files[0];if(f&&capCard)putRec(capCard,URL.createObjectURL(f));capIn.value=''});
-function putRec(card,url){
+capIn.addEventListener('change',()=>{const f=capIn.files&&capIn.files[0];if(f&&capCard)putRec(capCard,URL.createObjectURL(f),f);capIn.value=''});
+function putRec(card,url,blob){
   const it=ITEMS[card.dataset.k],box=card.querySelector('.recbox');
   box.innerHTML='<audio controls src="'+url+'"></audio><div class="row"><button class="ib" data-a="cmp">'+IC.play+'So sánh: mẫu rồi giọng chị</button></div><p class="muted">Nghe xem giọng mình đã có âm cuối, độ dài và chỗ nhấn giống mẫu chưa.</p>';
   const au=box.querySelector('audio');au.play().catch(()=>{});
+  if(blob)analyzeBlob(blob,it,box);
 }
 function doCmp(card){
   const it=ITEMS[card.dataset.k],au=card.querySelector('.recbox audio');if(!au)return;
@@ -500,7 +537,7 @@ async function doRec(btn,card){
     const st=await navigator.mediaDevices.getUserMedia({audio:true}),ch=[],m=new MediaRecorder(st);mr=m;
     m.ondataavailable=e=>ch.push(e.data);
     m.onstop=()=>{st.getTracks().forEach(t=>t.stop());btn.classList.remove('on');
-      putRec(card,URL.createObjectURL(new Blob(ch,{type:m.mimeType})));if(mr===m)mr=null};
+      const bl=new Blob(ch,{type:m.mimeType});putRec(card,URL.createObjectURL(bl),bl);if(mr===m)mr=null};
     m.start();btn.classList.add('on');setTimeout(()=>{if(m.state==='recording')m.stop()},8000);
   }catch(e){showFb(card,'bad','Không mở được micro để ghi âm.')}
 }
@@ -517,9 +554,11 @@ function show(v){
   if(v==='pairs')renderPairs();
   if(v==='sent')renderSent();
   if(v==='prog')renderProg();
+  if(v==='ipa')renderIPA();
   window.scrollTo(0,0);
 }
-function weakOrder(){return LESSONS.map((L,i)=>({i,p:lessonPct(i)})).sort((a,b)=>a.p-b.p||a.i-b.i)}
+function weakOrder(){const pr=profile(),bonus={};pr.forEach(x=>{if(x.go==='lesson')bonus[x.i]=Math.max(bonus[x.i]||0,x.sev)});
+  return LESSONS.map((L,i)=>({i,p:lessonPct(i)-(bonus[i]||0)*0.5})).sort((a,b)=>a.p-b.p||a.i-b.i)}
 function lesBtn(i){const L=LESSONS[i],p=lessonPct(i);
   return `<button class="les" data-a="lesson" data-i="${i}"><b>${esc(L.t)}</b><span class="pct">${p?Math.round(p*100)+'%':'mới'}</span><span class="muted">${esc(L.sub)}</span><span class="bar"><i style="width:${Math.round(p*100)}%"></i></span></button>`}
 function refreshHome(){
@@ -531,15 +570,18 @@ function refreshHome(){
   const w=weakOrder();
   document.getElementById('weakTxt').textContent=n>=g?'Đã đủ mục tiêu hôm nay. Rất tốt!':'Bài hôm nay: '+LESSONS[w[0].i].t;
   document.getElementById('weakList').innerHTML=w.slice(0,3).map(x=>lesBtn(x.i)).join('');
+  const lv=(S.lv||[]).slice(-1)[0],lt=document.getElementById('lvTxt');if(lt)lt.textContent=lv?lv.lv+' · '+new Date(lv.d*864e5).toLocaleDateString('vi-VN'):'chưa kiểm tra';
+  const ld=document.getElementById('lvDiff');if(ld)ld.textContent=lv?'Bài hôm nay theo mức '+lv.lv+', cần đạt '+Math.round(T()*100)+'%':'Làm bài kiểm tra để app chỉnh độ khó cho chị';
+  const pf=document.getElementById('profHome');if(pf)pf.innerHTML=profileHTML(3);
 }
 let openL=null;
 function renderSounds(){
   const el=document.getElementById('v-sounds');
-  if(openL===null){el.innerHTML='<h1>Âm khó của người Việt</h1><p class="muted">12 bài, mỗi bài một lỗi phát âm hay gặp. Phần trăm là điểm trung bình các từ trong bài.</p><div class="list">'+LESSONS.map((_,i)=>lesBtn(i)).join('')+'</div>';return}
+  if(openL===null){el.innerHTML='<h1>Bài học</h1><h2>Âm khó của người Việt</h2><p class="muted">12 bài, mỗi bài một lỗi phát âm hay gặp. Mỗi từ có hình minh họa, phiên âm và câu ví dụ.</p><div class="list">'+LESSONS.slice(0,NSOUND).map((_,i)=>lesBtn(i)).join('')+'</div><h2>Từ vựng công việc</h2><p class="muted">Từ dùng hằng ngày ở nhà máy hạt nhựa: sản xuất, chất lượng, báo cáo, kho và giao hàng.</p><div class="list">'+LESSONS.slice(NSOUND).map((_,j)=>lesBtn(NSOUND+j)).join('')+'</div>';return}
   const L=LESSONS[openL];
   el.innerHTML=`<button class="back" data-a="lessonBack">‹ Tất cả bài</button><h1>${esc(L.t)}</h1><p class="muted">${esc(L.sub)}</p>
-  <div class="how"><b>Khẩu hình</b>${L.how.map(h=>'<div>'+h+'</div>').join('')}</div>
-  <h2>Luyện từng từ</h2>${L.words.map(w=>pc('w:'+w[0])).join('')}
+  <div class="how"><b>${L.kind==='vocab'?'Lưu ý phát âm':'Khẩu hình'}</b>${L.how.map(h=>'<div>'+h+'</div>').join('')}</div>
+  <h2>${L.kind==='vocab'?'Từ vựng':'Luyện từng từ'}</h2>${L.words.map(w=>pc('w:'+w[0])).join('')}
   <h2>Ghép vào câu</h2>${pc('ls:'+openL)}
   ${PAIRS.some(p=>p[6]===openL)?`<button class="big" data-a="pairsFor" data-i="${openL}">Nghe phân biệt các cặp âm của bài này</button>`:''}`;
 }
@@ -584,12 +626,16 @@ function renderSent(){
 /* ---- Bài hôm nay ---- */
 let SES={steps:[],i:0,les:0};
 function startSession(){
-  const les=weakOrder()[0].i,L=LESSONS[les];
-  const ws=L.words.map(w=>'w:'+w[0]).sort((a,b)=>best(a)-best(b)).slice(0,6);
-  const steps=ws.map(k=>({t:'w',k}));
-  pickPairs(les,4).forEach(q=>steps.push({t:'p',q}));
+  const n=S.lvN===undefined?1:S.lvN,les=weakOrder()[0].i,L=LESSONS[les];
+  const plan=[[6,0,4,0,0],[6,0,4,0,0],[6,2,3,1,0],[4,3,2,2,0],[3,3,0,3,1],[2,3,0,4,2]][n];// từ, câu ví dụ, cặp âm, câu nói, câu dài
+  const ws=L.words.map(w=>'w:'+w[0]).sort((a,b)=>best(a)-best(b));
+  const steps=ws.slice(0,plan[0]).map(k=>({t:'w',k}));
+  ws.filter(k=>ITEMS[k].ex).slice(0,plan[1]).forEach(k=>steps.push({t:'w',k:ITEMS[k].ex}));
+  if(plan[2])pickPairs(les<NSOUND?les:null,plan[2]).forEach(q=>steps.push({t:'p',q}));
   steps.push({t:'w',k:'ls:'+les});
-  const d=today();for(let j=0;j<2;j++)steps.push({t:'w',k:'s:'+((d*2+j)%SENTS.length)});
+  const d=today();for(let j=0;j<plan[3];j++)steps.push({t:'w',k:'s:'+((d*3+j)%SENTS.length)});
+  const longs=TEST.map((t,i)=>t[0]>=3?'t2:'+i:null).filter(Boolean);
+  for(let j=0;j<plan[4];j++){const k=longs[(d+j)%longs.length],ti=+k.slice(3);ITEMS[k]={k,w:TEST[ti][1],vn:TEST[ti][3],kind:'s'};steps.push({t:'w',k})}
   SES={steps,i:0,les};show('session');renderSession();
 }
 function renderSession(){
@@ -612,20 +658,196 @@ function renderProg(){
   document.getElementById('v-prog').innerHTML=`<h1>Tiến độ của chị</h1>
   <div class="grid2"><div class="box"><b>${streak()}</b><span class="muted">ngày liên tiếp</span></div><div class="box"><b>${tries}</b><span class="muted">lượt nói</span></div>
   <div class="box"><b>${passed}</b><span class="muted">từ, câu đã đạt</span></div><div class="box"><b>${pa}</b><span class="muted">nghe phân biệt đúng</span></div></div>
-  <h2>Theo từng âm</h2><div class="list">${LESSONS.map((_,i)=>lesBtn(i)).join('')}</div>
+  <h2>Trình độ phát âm</h2>${(S.lv||[]).length?'<div class="list">'+S.lv.slice(-6).reverse().map(x=>`<div class="box" style="display:flex;justify-content:space-between"><span>${new Date(x.d*864e5).toLocaleDateString('vi-VN')}</span><b>${esc(x.lv)}</b></div>`).join('')+'</div>':'<p class="muted">Chưa làm bài kiểm tra.</p>'}<button class="ghost" style="width:100%;margin-top:10px" data-a="testStart">Làm bài kiểm tra trình độ</button>
+  <h2>Lỗi hay gặp của chị</h2>${profileHTML(8)}
+  <h2>Theo từng bài</h2><div class="list">${LESSONS.map((_,i)=>lesBtn(i)).join('')}</div>
   <h2>Lộ trình 8 tuần</h2><ol class="road">
   <li>Tuần 1–2: âm cuối /t/ /d/, -s, -ed. Đây là phần giúp người nghe hiểu chị rõ nhất.</li>
   <li>Tuần 3–4: “th”, s/sh/ch, l/n/r.</li><li>Tuần 5–6: nguyên âm dài ngắn, /æ/, f/v/w, cụm phụ âm.</li>
   <li>Tuần 7–8: trọng âm từ, nối âm, ngữ điệu. Nói theo câu mẫu mỗi ngày.</li></ol>
   <p class="muted">Bài hôm nay luôn chọn âm có điểm thấp nhất, nên chị chỉ cần bấm “Bắt đầu bài hôm nay” mỗi ngày.</p>
   <h2>Cài đặt</h2>
-  <label class="f">Mức điểm cần đạt<select data-set="target">${[0.7,0.8,0.85,0.9].map(v=>opt(v,S.set.target,Math.round(v*100)+'%')).join('')}</select></label>
+  <label class="f">Mức điểm cần đạt<select data-set="target">${[0.7,0.75,0.8,0.85,0.88,0.9].map(v=>opt(v,T(),Math.round(v*100)+'%')).join('')}</select></label>
   <label class="f">Giọng mẫu và giọng chấm<select data-set="acc">${opt('en-GB',S.set.acc,'Anh-Anh')}${opt('en-US',S.set.acc,'Anh-Mỹ')}</select></label>
+  <label class="f">Phiên âm dưới câu<select data-set="ipa">${opt('1',S.set.ipa===false?'0':'1','Hiện')}${opt('0',S.set.ipa===false?'0':'1','Ẩn')}</select></label>
   <label class="f">Tốc độ nghe chậm<select data-set="slow">${[0.4,0.5,0.6,0.7].map(v=>opt(v,S.set.slow,v+'×')).join('')}</select></label>
   <label class="f">Mục tiêu lượt nói mỗi ngày<select data-set="goal">${[10,20,30,40].map(v=>opt(v,S.set.goal,v+' lượt')).join('')}</select></label>
   <h2>Sao lưu</h2><p class="muted">Tiến độ lưu trên trình duyệt của máy này. Bấm Sao chép rồi dán vào Zalo hoặc ghi chú để giữ. Muốn khôi phục thì dán lại vào ô dưới và bấm Khôi phục.</p>
   <textarea id="bk" aria-label="Dữ liệu sao lưu"></textarea>
   <div class="nav2"><button class="ghost" data-a="copy">Sao chép</button><button class="ghost" data-a="restore">Khôi phục</button></div><p class="muted" id="bkMsg"></p>`;
+}
+
+
+
+/* ================= LỖI HAY GẶP + GỢI Ý BÀI TẬP ================= */
+function errAdd(k,ok){S.err=S.err||{};const e=S.err[k]=S.err[k]||[0,0];e[1]++;if(!ok)e[0]++;save()}
+const LESSON_OF={};LESSONS.forEach((L,i)=>L.words.forEach(w=>{LESSON_OF[w[0].toLowerCase()]=i}));
+function guessLesson(w){if(LESSON_OF[w]!==undefined)return LESSON_OF[w];if(/ed$/.test(w))return 2;if(/th/.test(w))return 3;if(/(s|es)$/.test(w)&&w.length>3)return 1;if(/(t|d)$/.test(w))return 0;if(/sh|ch/.test(w))return 4;if(/^(str|spr|scr|pl|pr|gr|cl|cr|tr|br|fl|gl)/.test(w))return 9;return -1}
+function missAdd(w){if(!w||FUNC.has(w))return;S.miss=S.miss||{};S.miss[w]=(S.miss[w]||0)+1}
+function triedPct(i){const ws=LESSONS[i].words.map(w=>S.w['w:'+w[0]]).filter(Boolean);return ws.length?ws.reduce((a,r)=>a+r.b,0)/ws.length:null}
+function profile(){
+  const out=[],miss=S.miss||{},byL={};
+  Object.entries(miss).forEach(([w,c])=>{const l=guessLesson(w);if(l>=0){(byL[l]=byL[l]||[]).push([w,c])}});
+  for(let i=0;i<NSOUND;i++){const p=triedPct(i),m=(byL[i]||[]).reduce((a,x)=>a+x[1],0);
+    if(p===null&&!m)continue;const sev=(p===null?0.3:1-p)+Math.min(0.5,m*0.06);
+    if(sev>0.25)out.push({sev,t:LESSONS[i].t,d:(p!==null?`Điểm trung bình ${Math.round(p*100)}%`:'')+(m?`${p!==null?', ':''}máy nghe sót ${m} lần (ví dụ: ${(byL[i]||[]).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]).join(', ')})`:''),go:'lesson',i})}
+  const E=S.err||{},rate=k=>E[k]&&E[k][1]>=3?E[k][0]/E[k][1]:null;
+  const add=(k,t,d,go,i)=>{const r=rate(k);if(r!==null&&r>=0.3)out.push({sev:r,t,d:d+` (sai ${E[k][0]}/${E[k][1]} lần phân tích)`,go,i})};
+  add('stress','Nhấn sai trọng âm từ','Chị hay nhấn nhầm âm tiết trong từ nhiều âm tiết','lesson',10);
+  add('extra','Thêm âm thừa','Hay chèn “ơ” giữa phụ âm hoặc đọc “ét” ở cuối từ','lesson',9);
+  add('inton','Ngữ điệu cuối câu','Lên xuống giọng cuối câu chưa đúng loại câu','lesson',11);
+  add('flu','Độ trôi chảy','Nói chậm hoặc ngắt quãng giữa câu','tab','sent');
+  add('rhythm','Nhịp điệu','Nhịp còn đều từng tiếng như tiếng Việt, chưa nhấn nhá','lesson',11);
+  return out.sort((a,b)=>b.sev-a.sev);
+}
+function profileHTML(max){const p=profile().slice(0,max);
+  if(!p.length)return '<p class="muted">App chưa đủ dữ liệu. Luyện thêm vài bài, bấm Nói và Ghi âm nhiều hơn, app sẽ tự tìm ra lỗi hay gặp của chị.</p>';
+  return '<div class="list">'+p.map(x=>`<button class="les" data-a="${x.go==='lesson'?'lesson':'tab'}" ${x.go==='lesson'?`data-i="${x.i}"`:`data-v="${x.i}"`}><b>${esc(x.t)}</b><span class="pct" style="color:var(--bad)">${Math.round(x.sev*100)}</span><span class="muted">${esc(x.d)}. Bấm để luyện ${x.go==='lesson'?'bài “'+esc(LESSONS[x.i].t)+'”':'mục Câu nói'}.</span></button>`).join('')+'</div>'}
+
+/* ================= PHIÊN ÂM: bảng ký hiệu + luyện đọc ================= */
+const SYM=[
+['Nguyên âm ngắn',[['ɪ','“i” ngắn, dứt khoát','sit'],['e','như “e” tiếng Việt','bed'],['æ','há rộng, giữa “e” và “a”','bag'],['ʌ','“ă” ngắn','cup'],['ɒ','“o” ngắn, tròn môi','hot'],['ʊ','“u” ngắn','good'],['ə','“ơ” rất nhẹ, âm không nhấn','about']]],
+['Nguyên âm dài (có dấu ː)',[['iː','“i” kéo dài, môi như cười','see'],['ɑː','“a” dài, mở họng','car'],['ɔː','“o” dài, tròn môi','four'],['uː','“u” dài, chu môi','food'],['ɜː','“ơ” kéo dài','work']]],
+['Nguyên âm đôi (đọc lướt)',[['eɪ','lướt “ây”','day'],['aɪ','lướt “ai”','time'],['ɔɪ','lướt “oi”','oil'],['aʊ','lướt “ao”','now'],['əʊ','lướt “âu”, không phải “ô”','go'],['ɪə','lướt “ia”','near'],['eə','lướt “e-ơ”','wear']]],
+['Phụ âm khác tiếng Việt',[['θ','lưỡi giữa hai răng, thổi hơi','think'],['ð','lưỡi giữa hai răng, rung','this'],['ʃ','chu môi “suỵt”','shift'],['tʃ','“ch” bật mạnh','check'],['dʒ','“ch” có rung','job'],['ʒ','như /ʃ/ có rung','usually'],['ŋ','“ng” giữ trong mũi','long'],['j','“d” rất nhẹ','yes'],['w','chu môi tròn rồi mở','wait'],['r','cong lưỡi, không chạm','red'],['v','răng chạm môi, rung','very'],['z','“s” có rung','zoo']]],
+['Ký hiệu đặc biệt',[['ˈ','âm tiết ngay sau dấu này đọc to, cao, dài (nhấn)','ˈwɔːtə = WA-tơ'],['ː','kéo dài nguyên âm phía trước','siː = xiii'],['ə','“ơ” lướt rất nhẹ, xuất hiện nhiều nhất','ˈfɪlə']]]
+];
+const EXIPA={sit:'sɪt',bed:'bed',bag:'bæɡ',cup:'kʌp',hot:'hɒt',good:'ɡʊd',about:'əˈbaʊt',see:'siː',car:'kɑː',four:'fɔː',food:'fuːd',work:'wɜːk',day:'deɪ',time:'taɪm',oil:'ɔɪl',now:'naʊ',go:'ɡəʊ',near:'nɪə',wear:'weə',think:'θɪŋk',this:'ðɪs',shift:'ʃɪft',check:'tʃek',job:'dʒɒb',usually:'ˈjuːʒuəli',long:'lɒŋ',yes:'jes',wait:'weɪt',red:'red',very:'ˈveri',zoo:'zuː'};
+let IG={list:[],i:0,sc:[]};
+function igPool(){const out=[];LESSONS.forEach(L=>L.words.forEach(w=>{if(!w[0].includes(' '))out.push('w:'+w[0])}));return out}
+function igStart(){const pool=shuffle(igPool()).slice(0,10);IG={list:pool,i:0,sc:[]};pool.forEach(k=>{const b=ITEMS[k];ITEMS['g:'+k]={k:'g:'+k,w:b.w,p:b.p,vn:'',kind:'w',hide:true}});renderIPA();window.scrollTo(0,0)}
+function igReveal(){const el=document.getElementById('igAns');if(!el)return;const it=ITEMS[IG.list[IG.i]];el.hidden=false;el.innerHTML=`<div class="fb ok"><span class="emo" style="font-size:28px">${it.emo||''}</span> Từ này là <b style="font-size:20px">${esc(it.w)}</b>: ${esc(it.vn)}</div><div class="row"><button class="ib" data-a="igSay">${IC.play}Nghe</button><button class="ib" data-a="igSlow">${IC.slow}Chậm</button><button class="ib mic" data-a="igNext">Tiếp</button></div>`}
+function renderIPA(){
+  const el=document.getElementById('v-ipa');
+  if(IG.list.length){
+    if(IG.i>=IG.list.length){const avg=IG.sc.reduce((a,b)=>a+(b||0),0)/IG.list.length;
+      S.ipaLog=S.ipaLog||[];S.ipaLog.push({d:today(),s:avg});save();IG={list:[],i:0,sc:[]};
+      el.innerHTML=`<h1>Xong lượt luyện đọc phiên âm</h1><div class="box"><span class="muted">Điểm trung bình</span><b class="lvl">${Math.round(avg*100)}%</b></div><p>${avg>=0.8?'Chị đọc phiên âm rất tốt. Thử thêm lượt mới hoặc làm bài kiểm tra trình độ.':'Xem lại bảng ký hiệu bên dưới, chú ý dấu ː (kéo dài) và dấu ˈ (nhấn), rồi luyện lượt mới.'}</p><button class="big" data-a="igStart">Luyện lượt mới</button><button class="ghost" style="width:100%;margin-top:10px" data-a="igBack">Về bảng phiên âm</button>`;return}
+    const k=IG.list[IG.i],it=ITEMS[k];
+    el.innerHTML=`<button class="back" data-a="igBack">‹ Thoát</button><div class="step"><span class="pct">${IG.i+1}/${IG.list.length}</span><span class="bar"><i style="width:${Math.round(IG.i/IG.list.length*100)}%"></i></span></div>
+    <div class="pc"><p class="muted" style="margin:0">Nhìn phiên âm, tự đọc thành tiếng rồi bấm Nói. Chưa biết thì bấm Xem đáp án.</p><div class="ipabig">/${esc(it.p)}/</div>
+    <div class="pc" data-k="g:${k}" style="border:0;padding:0;margin:0"><div class="row"><button class="ib mic" data-a="mic">${IC.mic}Nói</button><button class="ghost" data-a="igShow">Xem đáp án</button></div><div class="fb" hidden></div><div class="recbox"></div></div>
+    <div id="igAns" hidden></div></div>`;return}
+  el.innerHTML=`<h1>Học đọc phiên âm</h1><p>Phiên âm là “cách viết theo âm thanh”. Biết đọc phiên âm, chị tự đọc đúng mọi từ mới trong từ điển mà không cần nghe mẫu trước.</p>
+  <div class="how"><b>3 quy tắc vàng</b><div>Đọc <b>từng ký hiệu</b> từ trái sang phải, mỗi ký hiệu là một âm.</div><div>Dấu <b>ˈ</b> đứng trước âm tiết được nhấn: đọc to và cao hơn. Dấu <b>ː</b> nghĩa là kéo dài.</div><div><b>Âm cuối</b> trong phiên âm (t, d, s, z, k…) đều phải đọc ra, không nuốt.</div></div>
+  <button class="big" data-a="igStart">Luyện nhìn phiên âm đọc từ (10 câu)</button>
+  ${SYM.map(([g,list])=>`<h2>${g}</h2><div class="symgrid">${list.map(([sy,tip,ex])=>{const ip=EXIPA[ex];return `<button class="sym" data-a="symSay" data-w="${esc(ip?ex:'')}"><b>${esc(sy)}</b><em>${esc(tip)}</em><span>${ip?esc(ex)+' /'+esc(ip)+'/ · bấm để nghe':esc(ex)}</span></button>`}).join('')}</div>`).join('')}`;
+}
+/* ================= KIỂM TRA TRÌNH ĐỘ ================= */
+let TS={i:0,sc:[],on:false};
+function testStart(){TS={i:0,sc:[],on:true};TEST.forEach((_,i)=>{delete S.w['t:'+i]});show('test');renderTest()}
+function levelOf(bands){let n=0;for(const b of bands){if(b>=0.75)n++;else break}return n}
+function renderTest(){
+  const el=document.getElementById('v-test');
+  if(TS.i>=TEST.length){
+    const bands=LV.map((_,b)=>{const ix=TEST.map((t,i)=>t[0]===b?i:-1).filter(i=>i>=0);return ix.reduce((a,i)=>a+(TS.sc[i]||0),0)/ix.length});
+    const n=levelOf(bands),lv=n===0?'Dưới A1':LV[n-1];
+    S.lv=S.lv||[];S.lv.push({d:today(),lv,b:bands.map(x=>Math.round(x*100))});S.lvN=n;S.set.tman=false;save();TS.on=false;
+    const next=n<5?LV[n]:null;
+    el.innerHTML=`<h1>Kết quả kiểm tra</h1><div class="box"><span class="muted">Trình độ phát âm ước tính</span><div class="lvl">${lv}</div></div>
+    <h2>Điểm theo từng mức</h2>${bands.map((b,i)=>`<div class="bandrow"><b>${LV[i]}</b><span class="bar"><i style="width:${Math.round(b*100)}%"></i></span><span class="pct">${Math.round(b*100)}%</span></div>`).join('')}
+    <div class="how"><b>Gợi ý</b><div>${next?`Để lên <b>${next}</b>, chị cần nói rõ các câu mức ${next} (đạt từ 75% trở lên). Luyện “Bài hôm nay” mỗi ngày và mục Câu nói.`:'Chị đã đạt mức cao nhất của bài kiểm tra. Tiếp tục luyện câu dài và nối âm để giữ phong độ.'}</div><div>Kiểm tra lại sau 2 đến 4 tuần để xem tiến bộ.</div></div>
+    <p class="muted">Kết quả do máy nhận diện giọng nói chấm, chỉ là ước tính để theo dõi tiến bộ, không thay cho chứng chỉ chính thức.</p>
+    <button class="big" data-a="tab" data-v="home">Về trang Hôm nay</button>`;refreshHome();return}
+  const t=TEST[TS.i];
+  el.innerHTML=`<button class="back" data-a="tab" data-v="home">‹ Thoát</button><h1 style="font-size:26px">Kiểm tra trình độ</h1>
+  <div class="step"><span class="pct">${TS.i+1}/${TEST.length}</span><span class="bar"><i style="width:${Math.round(TS.i/TEST.length*100)}%"></i></span><span class="pill">${LV[t[0]]}</span></div>
+  <p class="muted">Tự đọc theo chữ và phiên âm, không nghe mẫu trước. Bấm Nói, đọc một lần. Chưa ưng thì được nói lại, máy lấy lần tốt nhất.</p>
+  ${pc('t:'+TS.i)}<button class="big" id="tNext" data-a="tNext" ${TS.sc[TS.i]===undefined?'hidden':''}>${TS.i+1<TEST.length?'Câu tiếp':'Xem kết quả'}</button>`;
+}
+
+
+/* ============ PHÂN TÍCH ÂM THANH: trọng âm, ngữ điệu, trôi chảy, nhịp điệu ============ */
+const VOW=/[iɪeæɑɒɔʊuʌəɜaoː]+/g;
+function sylOf(ipa){if(!ipa)return 0;let n=(ipa.match(VOW)||[]).length;n+=(ipa.match(/[^iɪeæɑɒɔʊuʌəɜaoːˈˌ\s][nl](?=$|\s)/g)||[]).length;return Math.max(1,n)}
+function stressIdx(ipa){const p=ipa.indexOf('ˈ');if(p<0)return -1;const pre=ipa.slice(0,p).replace(/[ˌ\s]/g,'');return pre?(pre.match(VOW)||[]).length:0}
+function sentSyl(t){return t.split(/[\s\-]+/).reduce((a,tok)=>{const w=tok.replace(/^[^A-Za-z']+|[^A-Za-z']+$/g,'').toLowerCase();return a+(w?sylOf(WIPA[w]||'ə'):0)},0)}
+function acoustic(x0,sr0){
+  const f=Math.max(1,Math.round(sr0/16000)),sr=sr0/f,n0=Math.floor(x0.length/f),x=new Float32Array(n0);
+  for(let i=0;i<n0;i++){let s=0;for(let k=0;k<f;k++)s+=x0[i*f+k];x[i]=s/f}
+  const hop=Math.round(sr*0.01),win=Math.round(sr*0.03),N=Math.floor((x.length-win)/hop);if(N<20)return null;
+  const E=new Float32Array(N),F0=new Float32Array(N);
+  for(let i=0;i<N;i++){let s=0;const o=i*hop;for(let j=0;j<win;j++){const v=x[o+j];s+=v*v}E[i]=10*Math.log10(s/win+1e-10)}
+  const so=Array.from(E).sort((a,b)=>a-b),floor=so[Math.floor(N*0.1)],top=so[Math.floor(N*0.98)],thr=Math.max(floor+10,top-30);
+  const V=Array.from(E,e=>e>thr);
+  const minL=Math.floor(sr/400),maxL=Math.min(win-20,Math.floor(sr/75));
+  for(let i=0;i<N;i++){if(!V[i])continue;const o=i*hop;let e0=0;for(let j=0;j<win;j++)e0+=x[o+j]*x[o+j];let best=0,bl=0;
+    for(let L=minL;L<=maxL;L++){let c=0;for(let j=0;j+L<win;j++)c+=x[o+j]*x[o+j+L];c/=e0;if(c>best){best=c;bl=L}}
+    if(best>0.4)F0[i]=sr/bl}
+  const a=V.indexOf(true),b=V.lastIndexOf(true);if(a<0||b-a<15)return null;
+  let pauses=0,pauseT=0,run=0;for(let i=a;i<=b;i++){if(!V[i])run++;else{if(run>=25){pauses++;pauseT+=run/100}run=0}}
+  const sm=new Float32Array(N);for(let i=0;i<N;i++){let s=0,c=0;for(let k=-3;k<=3;k++){const j=i+k;if(j>=0&&j<N){s+=E[j];c++}}sm[i]=s/c}
+  const vf=[];for(let i=a;i<=b;i++)if(F0[i])vf.push(F0[i]);vf.sort((p,q)=>p-q);const med=vf.length?vf[Math.floor(vf.length/2)]:0;
+  const st=hz=>hz&&med?12*Math.log2(hz/med):0;
+  const pk=[];for(let i=a+1;i<b;i++){if(!V[i]||!(sm[i]>=sm[i-1]&&sm[i]>sm[i+1]))continue;let l=sm[i],r=sm[i];
+    for(let k=1;k<=15&&i-k>=a;k++)l=Math.min(l,sm[i-k]);for(let k=1;k<=15&&i+k<=b;k++)r=Math.min(r,sm[i+k]);
+    if(sm[i]-Math.max(l,r)<2.5)continue;const last=pk[pk.length-1];if(last&&i-last.i<9){if(sm[i]>last.e)pk[pk.length-1]={i,e:sm[i]}}else pk.push({i,e:sm[i]})}
+  if(!pk.length){let m=a;for(let i=a;i<=b;i++)if(sm[i]>sm[m])m=i;pk.push({i:m,e:sm[m]})}
+  pk.forEach(p=>{const v=[];for(let k=-6;k<=6;k++){const j=p.i+k;if(j>=0&&j<N&&F0[j])v.push(F0[j])}v.sort((p,q)=>p-q);p.f=v.length?st(v[Math.floor(v.length/2)]):0});
+  const cont=[];for(let i=a;i<=b;i++)if(F0[i])cont.push([(i-a)/(b-a),st(F0[i])]);
+  const seg=(lo,hi)=>{const v=cont.filter(c=>c[0]>=lo&&c[0]<=hi).map(c=>c[1]).sort((p,q)=>p-q);return v.length?v[Math.floor(v.length/2)]:null};
+  const endS=seg(0.78,1),midS=seg(0.4,0.7);const slope=endS!==null&&midS!==null?endS-midS:null;
+  const cs=cont.map(c=>c[1]).sort((p,q)=>p-q);const range=cs.length>5?cs[Math.floor(cs.length*0.9)]-cs[Math.floor(cs.length*0.1)]:0;
+  return {dur:(b-a+1)/100,pauses,pauseT,pk,cont,slope,range};
+}
+function meter(label,val,txt){const c=val>=0.75?'ok':val>=0.5?'near':'bad';return `<div class="bandrow" style="grid-template-columns:96px 1fr 44px"><b style="font-size:14px">${label}</b><span class="bar"><i style="width:${Math.round(val*100)}%;background:var(--${c})"></i></span><span class="pct">${Math.round(val*100)}%</span></div><div class="muted" style="margin:-4px 0 8px">${txt}</div>`}
+function contourSVG(cont){if(cont.length<3)return '';const pts=cont.map(([t,s])=>`${(t*300).toFixed(1)},${(40-Math.max(-12,Math.min(12,s))*3).toFixed(1)}`).join(' ');
+  return `<svg viewBox="0 0 300 80" style="width:100%;height:70px;display:block;margin:6px 0" aria-label="Đường cao độ giọng"><line x1="0" y1="40" x2="300" y2="40" stroke="currentColor" stroke-opacity=".15"/><polyline points="${pts}" fill="none" stroke="var(--acc)" stroke-width="2.5" stroke-linejoin="round"/></svg><div class="muted" style="font-size:12px;margin-top:-4px">Đường cam là cao độ giọng chị từ đầu đến cuối (lên là cao giọng).</div>`}
+const AUX=['is','are','am','was','were','can','could','do','does','did','will','would','have','has','should','shall','may'];
+function reportHTML(r,it){
+  if(!r)return '<div class="muted">Bản ghi quá ngắn hoặc quá nhỏ, chị nói to và rõ hơn rồi ghi lại.</div>';
+  let h='<div class="how" style="margin-top:12px"><b>Phân tích giọng</b>';
+  const isS=it.kind==='s'||/\s/.test(it.w);
+  if(!isS){
+    const syl=sylOf(it.p),k=stressIdx(it.p),n=r.pk.length;
+    if(syl>=2&&k>=0){
+      if(n<2)h+=meter('Trọng âm',0.3,'Máy chưa tách được các âm tiết. Nói chậm, rõ từng âm tiết rồi ghi lại.');
+      else{const sc=r.pk.map(p=>p.e+0.6*p.f);let m=0;sc.forEach((v,i)=>{if(v>sc[m])m=i});
+        const got=n===syl?m:Math.round(m/(n-1)*(syl-1));const ok=got===k;errAdd('stress',ok);
+        h+=meter('Trọng âm',ok?0.9:0.35,ok?`Đúng: chị nhấn vào âm tiết thứ ${k+1}${it.st?' ('+esc(it.st)+')':''}.`:`Có vẻ chị nhấn vào âm tiết thứ ${got+1}, đúng ra phải nhấn âm tiết thứ ${k+1}${it.st?' ('+esc(it.st)+')':''}. Đọc âm tiết đó to hơn, cao hơn và dài hơn.`)}
+    }
+    errAdd('extra',!(n>syl+1));
+    if(n>syl+1)h+=meter('Số âm tiết',0.4,`Máy nghe được khoảng ${n} âm tiết, từ này chỉ có ${syl}. Có thể chị đang chèn thêm “ơ” hoặc đọc “ét” ở cuối.`);
+    else h+=meter('Số âm tiết',0.9,`Khớp với từ (${syl} âm tiết).`);
+  }else{
+    const words=it.w.replace(/[^A-Za-z' ?]/g,' ').trim().split(/\s+/),q=/\?\s*$/.test(it.w),rise=q&&AUX.includes((words[0]||'').toLowerCase());
+    if(r.slope===null)h+=meter('Ngữ điệu',0.3,'Chưa đo được cao độ, chị nói to và rõ hơn.');
+    else{const dir=r.slope>1.5?'lên':r.slope<-1.5?'xuống':'ngang';const want=rise?'lên':'xuống';const ok=dir===want;errAdd('inton',ok);
+      h+=meter('Ngữ điệu',ok?(r.range>=3?0.9:0.7):0.4,`Cuối câu chị ${dir==='ngang'?'giữ giọng ngang':dir+' giọng'}; câu này nên <b>${want} giọng</b> ở cuối${rise?' (câu hỏi Có/Không)':q?' (câu hỏi có từ để hỏi)':' (câu kể)'}.${r.range<3?' Giọng hơi đều đều, hãy nhấn rõ các từ chính.':''}`)}
+    const syl=sentSyl(it.w),speak=Math.max(0.3,r.dur-r.pauseT),rate=syl/speak;
+    const fl=Math.max(0,Math.min(1,(rate-1.5)/2))*(r.pauses>2?0.7:r.pauses>0?0.85:1);
+    errAdd('flu',fl>=0.6);
+    h+=meter('Trôi chảy',fl,`Tốc độ khoảng ${rate.toFixed(1)} âm tiết/giây${r.pauses?`, ngắt ${r.pauses} lần`:', không ngắt quãng'}. ${rate<2.5?'Hơi chậm, tập nói cả cụm một hơi.':rate>5.5?'Hơi nhanh, chậm lại một chút cho rõ.':'Tốc độ tốt.'}`);
+    const P=r.pk.map(p=>p.i);if(P.length>=4){const d=[];for(let i=1;i<P.length;i++)d.push(P[i]-P[i-1]);let s=0;for(let i=1;i<d.length;i++)s+=Math.abs(d[i]-d[i-1])/((d[i]+d[i-1])/2);const npvi=100*s/(d.length-1);
+      const v=Math.max(0,Math.min(1,(npvi-30)/30));errAdd('rhythm',npvi>=45);h+=meter('Nhịp điệu',v,npvi>=50?'Có nhấn nhá dài ngắn giống tiếng Anh.':'Nhịp còn đều từng tiếng như tiếng Việt. Nhấn mạnh từ chính, lướt nhanh các từ phụ (the, a, of, to, and).')}
+    else h+=meter('Nhịp điệu',0.4,'Chưa đủ âm tiết để đánh giá nhịp, chị đọc cả câu liền mạch.');
+    h+=contourSVG(r.cont);
+  }
+  return h+'<div class="muted" style="font-size:12px">Máy phân tích tự động từ âm thanh, chỉ để tham khảo. Nên đọc trong phòng yên tĩnh.</div></div>';
+}
+
+const FUNC=new Set('a an the of to for at in on and but or is are was were be am it its i you we they he she my our your their this that these those with from by as do does did can could will would should have has had me us them there so if not no than then up out off'.split(' '));
+function expBars(it){const isS=it.kind==='s'||/\s/.test(it.w);
+  if(!isS){const n=sylOf(it.p),k=Math.max(0,stressIdx(it.p));return Array.from({length:n},(_,i)=>n===1||i===k?1:0.45)}
+  const out=[];it.w.split(/[\s\-]+/).forEach(tok=>{const w=tok.replace(/^[^A-Za-z']+|[^A-Za-z']+$/g,'').toLowerCase();if(!w)return;const ip=WIPA[w]||'ə',n=sylOf(ip);
+    if(FUNC.has(w)){for(let i=0;i<n;i++)out.push(0.35)}else{const k=n>1?Math.max(0,stressIdx(ip)):0;for(let i=0;i<n;i++)out.push(i===k?1:0.5)}});return out}
+function barsSVG(v,col,arrow){const n=v.length||1,W=300,gap=Math.min(6,120/n),bw=(W-gap*(n-1))/n;
+  return `<svg viewBox="0 0 ${W+30} 60" style="width:100%;height:56px;display:block">${v.map((h,i)=>`<rect x="${(i*(bw+gap)).toFixed(1)}" y="${(56-h*52).toFixed(1)}" width="${bw.toFixed(1)}" height="${(h*52).toFixed(1)}" rx="3" fill="${col}"/>`).join('')}${arrow?`<text x="${W+15}" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="${col}">${arrow}</text>`:''}</svg>`}
+function compareHTML(r,it){
+  if(!r)return '';const isS=it.kind==='s'||/\s/.test(it.w);
+  const ex=expBars(it);const sc=r.pk.map(p=>p.e+0.6*p.f),lo=Math.min(...sc),hi=Math.max(...sc);
+  const me=sc.map(v=>hi-lo<1?0.7:0.3+0.7*(v-lo)/(hi-lo));
+  let ea='',ma='';if(isS){const words=it.w.replace(/[^A-Za-z' ?]/g,' ').trim().split(/\s+/);const rise=/\?\s*$/.test(it.w)&&AUX.includes((words[0]||'').toLowerCase());ea=rise?'↗':'↘';ma=r.slope===null?'?':r.slope>1.5?'↗':r.slope<-1.5?'↘':'→'}
+  return `<div class="box" style="margin-top:12px"><b>So sánh ngang</b><div class="muted" style="font-size:13px">Mỗi cột là một âm tiết. Cột cao là âm tiết được nhấn.${isS?' Mũi tên là giọng lên hay xuống ở cuối câu.':''}</div>
+  <div style="margin-top:8px;font-size:13px;font-weight:700">Mẫu chuẩn · ${ex.length} âm tiết</div>${barsSVG(ex,'var(--plum)',ea)}
+  <div style="margin-top:6px;font-size:13px;font-weight:700;color:var(--acc)">Giọng chị · máy nghe được ${me.length} âm tiết</div>${barsSVG(me,'var(--acc)',ma)}
+  <button class="ib" data-a="cmp" style="margin-top:8px">${IC.play}Nghe mẫu rồi nghe giọng chị</button></div>`;
+}
+async function analyzeBlob(blob,it,box){
+  const out=document.createElement('div');out.className='muted';out.textContent='Đang phân tích giọng…';box.appendChild(out);
+  try{const AC=window.AudioContext||window.webkitAudioContext;const ac=new AC();const buf=await ac.decodeAudioData(await blob.arrayBuffer());try{ac.close()}catch(e){}
+    await new Promise(r=>setTimeout(r,20));const r=acoustic(buf.getChannelData(0),buf.sampleRate);out.className='';out.innerHTML=compareHTML(r,it)+reportHTML(r,it)}
+  catch(e){out.textContent='Không phân tích được bản ghi này.'}
 }
 
 /* ================= SỰ KIỆN ================= */
@@ -637,6 +859,15 @@ document.addEventListener('click',e=>{
   else if(a==='mic')doMic(b,card);
   else if(a==='rec')doRec(b,card);
   else if(a==='cmp')doCmp(card);
+  else if(a==='igStart')igStart();
+  else if(a==='igBack'){IG={list:[],i:0,sc:[]};renderIPA();window.scrollTo(0,0)}
+  else if(a==='igShow'){IG.sc[IG.i]=IG.sc[IG.i]||0;igReveal()}
+  else if(a==='igSay')speak(ITEMS[IG.list[IG.i]].w);
+  else if(a==='igSlow')speak(ITEMS[IG.list[IG.i]].w,S.set.slow);
+  else if(a==='igNext'){IG.i++;renderIPA();window.scrollTo(0,0)}
+  else if(a==='symSay'){if(b.dataset.w)speak(b.dataset.w,0.8)}
+  else if(a==='testStart')testStart();
+  else if(a==='tNext'){TS.i++;renderTest();window.scrollTo(0,0)}
   else if(a==='testSpk')speak('Hello Lan. Let us practise English.');
   else if(a==='guide'){const g=card.querySelector('.guide');g.hidden=!g.hidden}
   else if(a==='tab'){if(b.dataset.v==='sounds')openL=null;show(b.dataset.v)}
@@ -657,7 +888,7 @@ document.addEventListener('click',e=>{
     const m=document.getElementById('bkMsg');try{navigator.clipboard.writeText(t).then(()=>m.textContent='Đã sao chép.',()=>m.textContent='Chọn hết chữ trong ô rồi sao chép tay.')}catch(err){m.textContent='Chọn hết chữ trong ô rồi sao chép tay.'}}
   else if(a==='restore'){const m=document.getElementById('bkMsg');try{const d=JSON.parse(document.getElementById('bk').value);if(!d.w)throw 0;S=d;S.set=Object.assign({},DEF.set,S.set||{});S.pairs=S.pairs||{r:0,n:0};S.days=S.days||{};save();renderProg();document.getElementById('bkMsg').textContent='Đã khôi phục tiến độ.'}catch(err){m.textContent='Dữ liệu không hợp lệ, kiểm tra lại đoạn đã dán.'}}
 });
-document.addEventListener('change',e=>{const s=e.target.closest('[data-set]');if(!s)return;const k=s.dataset.set;S.set[k]=k==='acc'?s.value:+s.value;save();renderProg()});
+document.addEventListener('change',e=>{const s=e.target.closest('[data-set]');if(!s)return;const k=s.dataset.set;if(k==='target')S.set.tman=true;S.set[k]=k==='acc'?s.value:k==='ipa'?s.value==='1':+s.value;save();renderProg()});
 
 let micOK=false,micErr='';
 function diag(){
